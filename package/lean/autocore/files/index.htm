@@ -51,6 +51,8 @@
 		local eth_info = luci.sys.exec("ethinfo")
 
 		local user_info = tonumber(luci.sys.exec("cat /proc/net/arp | grep '0x2' | wc -l")) or 0
+		local cpu_usage = fs.readfile("/tmp/cpuusage") or "6.6%"
+		luci.sys.exec("/sbin/getcpu &")
 		local rv = {
 			cpuinfo    = cpu_info,
 			ethinfo    = eth_info,
@@ -174,7 +176,7 @@
 		});
 	}
 
-	XHR.poll(5, '<%=REQUEST_URI%>', { status: 1 },
+	XHR.poll(1, '<%=REQUEST_URI%>', { status: 1 },
 		function(x, info)
 		{
 			if (!(npoll++ % 5))
@@ -652,7 +654,10 @@
 
 			if (e = document.getElementById('uptime'))
 				e.innerHTML = String.format('%t', info.uptime);
-				
+
+			if (e = document.getElementById('userinfo'))
+				e.innerHTML = info.userinfo;
+
 			if (e = document.getElementById('cpuinfo'))
 				e.innerHTML = info.cpuinfo;	
 
