@@ -5,6 +5,7 @@
 
 include $(TOPDIR)/rules.mk
 
+PKG_NAME:=luci-app-PwdHackDeny
 LUCI_TITLE:=LuCI support for password hack deny by wulishui
 LUCI_DEPENDS:=+gawk +ipset
 LUCI_PKGARCH:=all

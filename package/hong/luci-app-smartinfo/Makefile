@@ -1,24 +1,18 @@
-# Copyright (C) 2016 Openwrt.org
 #
-# This is free software, licensed under the Apache License, Version 2.0 .
+# Copyright (C) 2019 Jianpeng Xiang (1505020109@mail.hnust.edu.cn)
+#
+# This is free software, licensed under the GNU General Public License v3.
 #
 
 include $(TOPDIR)/rules.mk
 
 LUCI_TITLE:=LuCI support for Smartinfo
 LUCI_DEPENDS:=+smartmontools 
-LUCI_PKGARCH:=all
 PKG_VERSION:=3.2
 PKG_RELEASE:=1
 
-define Package/$(PKG_NAME)/postinst
-#!/bin/sh
-  chmod 0755 /usr/lib/smartinfo/smart_checker.sh >/dev/null 2>&1     
-  chmod 0755 /usr/lib/smartinfo/smart_functions.sh >/dev/null 2>&1   
-  chmod 0755 /usr/lib/smartinfo/smart_status.sh >/dev/null 2>&1      
-  chmod 0755 /etc/init.d/smartinfo >/dev/null 2>&1                   
-exit 0
-endef
+PKG_MAINTAINER:=Jianpeng Xiang <1505020109@mail.hnust.edu.cn>
+PKG_LICENSE:=GPLv3
 
 include $(TOPDIR)/feeds/luci/luci.mk
 

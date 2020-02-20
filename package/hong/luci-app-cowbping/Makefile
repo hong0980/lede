@@ -6,6 +6,7 @@
 include $(TOPDIR)/rules.mk
 
 LUCI_TITLE:=LuCI support for cow B ping by wulishui
+PKG_NAME:=luci-app-cowbping
 LUCI_DEPENDS:=+libc
 LUCI_PKGARCH:=all
 PKG_VERSION:=v1.2
