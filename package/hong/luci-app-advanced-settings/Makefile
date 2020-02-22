@@ -5,10 +5,10 @@
 
 include $(TOPDIR)/rules.mk
 
-LUCI_TITLE:=LuCI support for white or black list by wulishui
-LUCI_DEPENDS:=+ipset +libc
+LUCI_TITLE:=LuCI support for white or black list
+LUCI_DEPENDS:=
 LUCI_PKGARCH:=all
-PKG_VERSION:=2.0-20191231
+PKG_VERSION:=2.0-20200221
 PKG_RELEASE:=1
 
 include $(TOPDIR)/feeds/luci/luci.mk

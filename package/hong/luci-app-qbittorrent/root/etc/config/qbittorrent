@@ -10,3 +10,6 @@ config qbittorrent 'main'
 	option MaxRatioAction '0'
 	option SeedChokingAlgorithm 'FastestUpload'
 	option enabled '0'
+	option user 'root'
+	option QueueingEnabled 'false'
+	

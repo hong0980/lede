@@ -325,7 +325,7 @@ d.disabled = 0
 d.enabled = 1
 d.default = default_config.advance or 0
 
-d = s:option(Value, "hostname", translate("Host Name"))
+d = s:option(Value, "hostname", translate("Host Name"), translate("The hostname to use for the container"))
 d.rmempty = true
 d.default = default_config.hostname or nil
 d:depends("advance", 1)
@@ -538,7 +538,7 @@ m.handle = function(self, state, data)
   end
   local pull_image = function(image)
     local server = "index.docker.io"
-    local json_stringify = luci.json and luci.json.encode or luci.jsonc.stringify
+    local json_stringify = luci.jsonc and luci.jsonc.stringify
     docker:append_status("Images: " .. "pulling" .. " " .. image .. "...")
     local x_auth = nixio.bin.b64encode(json_stringify({serveraddress= server}))
     local res = dk.images:create(nil, {fromImage=image,_header={["X-Registry-Auth"]=x_auth}})
