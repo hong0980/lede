@@ -7,9 +7,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-softwarecenter
 PKG_VERSION:=1.0.7
-
-PKG_MAINTAINER:=Jianpeng Xiang <1505020109@mail.hnust.edu.cn>
-PKG_LICENSE:=GPLv3
+PKG_RELEASE:=2
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -39,7 +37,7 @@ endef
 define Build/Compile
 endef
 
-define Package/softwarecenter/install
+define Package/$(PKG_NAME)/install
   $(INSTALL_DIR) $(1)/usr/lib/lua/luci
 	$(CP) ./luasrc/* $(1)/usr/lib/lua/luci
 	$(INSTALL_DIR) $(1)/etc/config

@@ -225,3 +225,18 @@ msgstr "无效的终止扇区！"
 
 msgid "Partition not exists!"
 msgstr "分区不存在！"
+
+msgid "ERR: Not enough members"
+msgstr "错误：硬盘数量不够"
+
+msgid "ERR: Cannot find proper md number"
+msgstr "错误：找不到正确的md号码"
+
+msgid "Warnning !! \nTHIS WILL OVERWRITE EXISTING PARTITIONS!! \nModify the partition table?"
+msgstr "警告！！\n将覆盖现有分区！！\n确定修改分区表吗？"
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
