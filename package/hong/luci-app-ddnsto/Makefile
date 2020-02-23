@@ -44,19 +44,10 @@ define Package/$(PKG_NAME)/postinst
 endef
 
 define Package/$(PKG_NAME)/install
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
-	$(INSTALL_DATA) ./luasrc/controller/ddnsto.lua $(1)/usr/lib/lua/luci/controller/
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/view/
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/view/ddnsto/
-	$(INSTALL_DATA) ./luasrc/view/ddnsto/index.htm $(1)/usr/lib/lua/luci/view/ddnsto/
-	$(INSTALL_DATA) ./luasrc/view/ddnsto/dvalue.htm $(1)/usr/lib/lua/luci/view/ddnsto/
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/model/cbi/
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/model/cbi/ddnsto
-	$(INSTALL_DATA) ./luasrc/model/cbi/ddnsto/global.lua $(1)/usr/lib/lua/luci/model/cbi/ddnsto/
-	$(INSTALL_DIR) $(1)/etc $(1)/etc/config
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./root/etc/init.d/ddnsto $(1)/etc/init.d
-	$(INSTALL_CONF) ./files/config/ddnsto $(1)/etc/config/
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci
+	cp -pR ./luasrc/* $(1)/usr/lib/lua/luci
+	$(INSTALL_DIR) $(1)/
+	cp -pR ./root/* $(1)/
 	$(INSTALL_DIR)	$(1)/usr/bin/
 	$(INSTALL_BIN) ./files/arm/ddnsto $(1)/usr/bin/
 endef

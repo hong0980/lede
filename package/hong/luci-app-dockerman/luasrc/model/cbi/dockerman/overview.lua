@@ -8,17 +8,17 @@ local docker = require "luci.model.docker"
 local uci = require "luci.model.uci"
 
 function byte_format(byte)
-	local suff = {"B", "KB", "MB", "GB", "TB"}
-	for i=1, 5 do
-		if byte > 1024 and i < 5 then
-			byte = byte / 1024
-		else
-			return string.format("%.2f %s", byte, suff[i]) 
-		end 
-	end
+  local suff = {"B", "KB", "MB", "GB", "TB"}
+  for i=1, 5 do
+    if byte > 1024 and i < 5 then
+      byte = byte / 1024
+    else
+      return string.format("%.2f %s", byte, suff[i]) 
+    end 
+  end
 end
 
-local m = Map("docker", translate("Docker"))
+local m = Map("dockerman", translate("Docker"))
 local docker_info_table = {}
 -- docker_info_table['0OperatingSystem'] = {_key=translate("Operating System"),_value='-'}
 -- docker_info_table['1Architecture'] = {_key=translate("Architecture"),_value='-'}
@@ -41,10 +41,10 @@ s.containers_total = '-'
 s.images_total = '-'
 s.networks_total = '-'
 s.volumes_total = '-'
-local socket = luci.model.uci.cursor():get("docker", "local", "socket_path")
+local socket = luci.model.uci.cursor():get("dockerman", "local", "socket_path")
 if nixio.fs.access(socket) and (require "luci.model.docker").new():_ping().code == 200 then
   local dk = docker.new()
-  local containers_list = dk.containers:list(nil, {all=true}).body
+  local containers_list = dk.containers:list({query = {all=true}}).body
   local images_list = dk.images:list().body
   local vol = dk.volumes:list()
   local volumes_list = vol and vol.body and vol.body.Volumes or {}
@@ -76,7 +76,7 @@ if nixio.fs.access(socket) and (require "luci.model.docker").new():_ping().code 
   s.networks_total = tostring(#networks_list)
   s.volumes_total = tostring(#volumes_list)
 end
-s.template = "docker/overview"
+s.template = "dockerman/overview"
 
 
 s = m:section(NamedSection, "local", "section", translate("Setting"))
