@@ -205,7 +205,7 @@ end
 
 local m = SimpleForm("docker", translate("Docker"))
 m.template = "dockerman/cbi/xsimpleform"
-m.redirect = luci.dispatcher.build_url("admin", "docker", "containers")
+m.redirect = luci.dispatcher.build_url("admin", "services","docker", "containers")
 -- m.reset = false
 -- m.submit = false
 -- new Container

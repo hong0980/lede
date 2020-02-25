@@ -38,7 +38,7 @@ endef
 
 define Package/$(PKG_NAME)/postinst
 #!/bin/sh
-rm -fr /tmp/luci-indexcache /tmp/luci-modulecache
+rm -rf /tmp/luci-indexcache /tmp/luci-modulecache
 endef
 
 define Package/$(PKG_NAME)/install
@@ -47,11 +47,9 @@ define Package/$(PKG_NAME)/install
 	# $(INSTALL_DIR) $(1)/www
 	# cp -pR $(PKG_BUILD_DIR)/htdoc/* $(1)/www
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci
-	cp -pR $(PKG_BUILD_DIR)/luasrc/* $(1)/usr/lib/lua/luci/
+	$(CP) ./luasrc/* $(1)/usr/lib/lua/luci
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
-	$(foreach po, $(shell find $(PKG_BUILD_DIR)/po/*/*.po),\
-		po2lmo $(po) $(1)/usr/lib/lua/luci/i18n/dockerman.$(shell echo $(po) | awk -F'/' '{print $$(NF-1)}').lmo;)
-	#po2lmo $(PKG_BUILD_DIR)/po/zh-cn/dockerman.po $(1)/usr/lib/lua/luci/i18n/dockerman.zh-cn.lmo
+	po2lmo ./po/zh-cn/dockerman.po $(1)/usr/lib/lua/luci/i18n/dockerman.zh-cn.lmo
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))

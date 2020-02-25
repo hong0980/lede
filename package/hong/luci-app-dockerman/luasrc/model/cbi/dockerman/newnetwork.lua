@@ -10,7 +10,7 @@ local dk = docker.new()
 
 m = SimpleForm("docker", translate("Docker"))
 m.template = "dockerman/cbi/xsimpleform"
-m.redirect = luci.dispatcher.build_url("admin", "docker", "networks")
+m.redirect = luci.dispatcher.build_url("admin", "services","docker", "networks")
 
 docker_status = m:section(SimpleSection)
 docker_status.template = "dockerman/apply_widget"
