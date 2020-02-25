@@ -32,6 +32,8 @@ define Package/$(PKG_NAME)/install
 	$(CP) ./luasrc/* $(1)/usr/lib/lua/luci
 	$(INSTALL_CONF) ./root/etc/config/cpulimit $(1)/etc/config
 	$(INSTALL_BIN) ./root/etc/init.d/cpulimit $(1)/etc/init.d
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)./root/usr/bin/cpulimit.sh $(1)/usr/bin
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
 	po2lmo ./po/zh-cn/cpulimit.po $(1)/usr/lib/lua/luci/i18n/cpulimit.zh-cn.lmo
 endef
