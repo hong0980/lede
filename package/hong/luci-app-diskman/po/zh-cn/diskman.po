@@ -5,7 +5,7 @@ msgid "DiskMan"
 msgstr "磁盘管理"
 
 msgid "Manage Disks over LuCI."
-msgstr "通过LuCI管理磁盘"
+msgstr "通过 LuCI 管理磁盘"
 
 msgid "Rescan Disks"
 msgstr "重新扫描磁盘"
@@ -26,7 +26,7 @@ msgid "Partition Table"
 msgstr "分区表"
 
 msgid "SATA Version"
-msgstr "SATA版本"
+msgstr "SATA 版本"
 
 msgid "Health"
 msgstr "健康"
@@ -233,7 +233,7 @@ msgid "ERR: Cannot find proper md number"
 msgstr "错误：找不到正确的md号码"
 
 msgid "Warnning !! \nTHIS WILL OVERWRITE EXISTING PARTITIONS!! \nModify the partition table?"
-msgstr "警告！！\n将覆盖现有分区！！\n确定修改分区表吗？"
+msgstr "警告！！\n 将覆盖现有分区！！\n 确定修改分区表吗？"
 
 msgid ""
 msgstr ""
