@@ -139,7 +139,7 @@ msgstr "网关"
 msgid "New"
 msgstr "新建"
 
-msgid "Resolv CLI"
+msgid "Resolve CLI"
 msgstr "解析命令行"
 
 msgid "Docker Image"
@@ -249,6 +249,12 @@ msgstr "Docker 操作状态临时文件路径"
 
 msgid "Where you want to save the docker status file"
 msgstr "保存docker status文件的位置"
+
+msgid "Enable WAN access Dokcer"
+msgstr "允许 WAN 访问 Dokcer"
+
+msgid "Enable WAN access docker mapped ports (need reload Docker-ce service)"
+msgstr "允许 WAN 访问 Dokcer 映射后的端口（易受攻击！）。<br /><br />如已更改此选项，需要点击应用并保存后重启docker服务。<br />推荐禁用该选项后，用系统防火墙选择性映射 172.17.0.X:XX 端口到 WAN"
 
 msgid "Enable Debug"
 msgstr "启用调试"
@@ -390,6 +396,24 @@ msgstr "请输入新镜像标签名称"
 
 msgid "Error"
 msgstr "错误"
+
+msgid "Console"
+msgstr "控制台"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 msgid "Please input the PATH and select the file !"
 msgstr "请先输入路径，然后选择文件！"

@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-dockerman
-PKG_VERSION:=v0.3.1
+PKG_VERSION:=v0.3.3
 PKG_RELEASE:=beta
 PKG_MAINTAINER:=lisaac <https://github.com/lisaac/luci-app-dockerman>
 PKG_LICENSE:=AGPL-3.0
@@ -35,6 +35,8 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_CONF) ./root/etc/config/dockerman $(1)/etc/config
 	$(INSTALL_DIR) $(1)/etc
 	$(INSTALL_BIN) ./root/etc/docker-init $(1)/etc
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./root/etc/init.d/dockerd $(1)/etc/ini.d
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci
 	$(CP) ./luasrc/* $(1)/usr/lib/lua/luci
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n

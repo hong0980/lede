@@ -58,7 +58,7 @@ local pull_section = m:section(Table,pull_value, translate("Pull Image"))
 pull_section.template="cbi/nullsection"
 local tag_name = pull_section:option(Value, "_image_tag_name")
 tag_name.template = "dockerman/cbi/inlinevalue"
-tag_name.placeholder="hello-world:latest"
+tag_name.placeholder="lisaac/luci:latest"
 local registry = pull_section:option(Value, "_registry")
 registry.template = "dockerman/cbi/inlinevalue"
 registry:value("index.docker.io", "Docker Hub")
@@ -232,6 +232,6 @@ end
 
 local btnload = action:option(Button, "load")
 btnload.inputtitle= translate("Load")
-btnload.template = "dockerman/image_load"
+btnload.template = "dockerman/images_load"
 btnload.inputstyle = "add"
 return m
