@@ -35,8 +35,8 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_CONF) ./root/etc/config/dockerman $(1)/etc/config
 	$(INSTALL_DIR) $(1)/etc
 	$(INSTALL_BIN) ./root/etc/docker-init $(1)/etc
-	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) ./root/etc/init.d/dockerd $(1)/etc/ini.d
+#	$(INSTALL_DIR) $(1)/etc/init.d
+#	$(INSTALL_BIN) ./root/etc/init.d/* $(1)/etc/init.d/
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci
 	$(CP) ./luasrc/* $(1)/usr/lib/lua/luci
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n

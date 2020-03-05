@@ -439,6 +439,24 @@ msgstr "Docker下载完成。"
 msgid "Reveal/hide password"
 msgstr "显示/隐藏 密码"
 
+msgid "Unless stopped"
+msgstr "除非停止"
+
+msgid "Always"
+msgstr "总是"
+
+msgid "On failure"
+msgstr "失败时"
+
+msgid "No"
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
 msgid ""
 msgstr ""
 

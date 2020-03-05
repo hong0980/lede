@@ -23,6 +23,11 @@ endef
 define Build/Compile
 endef
 
+define Package/$(PKG_NAME)/postinst
+#!/bin/sh
+rm -f /tmp/luci-indexcache /tmp/luci-modulecache
+endef
+
 define Package/$(PKG_NAME)/conffiles
 /etc/config/cpulimit
 endef
