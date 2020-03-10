@@ -20,7 +20,7 @@ luci-app-filetransfer luci-app-vsftpd luci-app-ssr-plus luci-app-unblockmusic \
 luci-app-zerotier luci-app-arpbind luci-app-vlmcsd luci-app-wol luci-app-ramfree \
 luci-app-sfe luci-app-flowoffload luci-app-nlbwmon luci-app-accesscontrol luci-app-cpufreq \
 luci-app-passwall luci-app-guest-wifi luci-app-cpulimit luci-app-ttyd luci-app-smartinfo luci-app-syncdial luci-app-wifischedule \
-luci-app-oaf luci-app-serverchan luci-app-softwarecenter \
+luci-app-oaf luci-app-serverchan luci-app-softwarecenter luci-app-advanced-settings \
 ddns-scripts_aliyun ddns-scripts_dnspod
 # For nas targets
 DEFAULT_PACKAGES.nas:=block-mount fdisk lsblk mdadm
