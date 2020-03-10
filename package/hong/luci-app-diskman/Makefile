@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-diskman
-PKG_VERSION:=v0.2.3
+PKG_VERSION:=v0.2.4
 PKG_RELEASE:=beta
 PKG_MAINTAINER:=lisaac <https://github.com/lisaac/luci-app-diskman>
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -15,7 +15,7 @@ define Package/$(PKG_NAME)
 	SUBMENU:=3. Applications
 	TITLE:=Disk Manager interface for LuCI
 	PKGARCH:=all
-	DEPENDS:=+e2fsprogs +parted +smartmontools +blkid +btrfs-progs +mdadm
+	DEPENDS:=+e2fsprogs +parted +smartmontools +blkid +btrfs-progs +lsblk +mdadm +kmod-md-raid456 +kmod-md-linear
 endef
 
 define Package/$(PKG_NAME)/description
@@ -40,7 +40,6 @@ define Package/$(PKG_NAME)/install
 	# cp -pR ./root/* $(1)/
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/i18n
 	po2lmo ./po/zh-cn/diskman.po $(1)/usr/lib/lua/luci/i18n/diskman.zh-cn.lmo
-	po2lmo ./po/pl/diskman.po $(1)/usr/lib/lua/luci/i18n/diskman.pl.lmo
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))

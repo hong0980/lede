@@ -497,8 +497,8 @@ msgstr "本页是qBittorrent的日志文档内容。"
 msgid "This page is the content of the configuration document under /etc/config/qbittorrent."
 msgstr "本页是/etc/config/qbittorrent下的配置文档内容。"
 
-msgid ""
-msgstr ""
+msgid "Leave blank to use default user."
+msgstr "留空以使用默认用户。"
 
 msgid ""
 msgstr ""

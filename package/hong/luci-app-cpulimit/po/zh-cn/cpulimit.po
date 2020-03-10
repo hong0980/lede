@@ -143,8 +143,8 @@ msgstr "失败"
 msgid "connecting"
 msgstr "连接中"
 
-msgid ""
-msgstr ""
+msgid "Use as Docker data (/opt/docker)"
+msgstr "作为Docker数据分区使用 (/opt/docker)"
 
 msgid ""
 msgstr ""

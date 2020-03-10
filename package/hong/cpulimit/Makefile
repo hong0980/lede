@@ -14,6 +14,7 @@ PKG_RELEASE:=1
 include $(INCLUDE_DIR)/package.mk
 
 define Package/cpulimit
+  SECTION:=utils
   CATEGORY:=Utilities
   TITLE:=cpulimit
   URL:=https://github.com/opsengine/cpulimit.git

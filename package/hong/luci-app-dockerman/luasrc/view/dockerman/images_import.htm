@@ -51,7 +51,7 @@
   let new_tag = function (image_id) {
     let new_tag = prompt("<%:New tag%>\n<%:Image%>" + "ID: " + image_id + "\n<%:Please input new tag%>:", "")
     if (new_tag) {
-      (new XHR()).post('<%=url('admin/services/docker/images_tag')%>',
+      (new XHR()).post("<%=url('admin/services/docker/images_tag')%>",
         { id: image_id, tag: new_tag },
         function (r) {
           if (r.status == 201) {

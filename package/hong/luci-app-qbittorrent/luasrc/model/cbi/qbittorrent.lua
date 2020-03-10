@@ -17,7 +17,7 @@ t=a:section(NamedSection,"main","qbittorrent")
 t:tab("basic",translate("Basic Settings"))
 e=t:taboption("basic",Flag,"enabled",translate("Enabled"),"%s  %s"%{translate(""),"<b style=\"color:green\">"..translatef("当前qBitTorrent的版本: %s",s).."</b>"})
 e.default="1"
-e=t:taboption("basic",ListValue,"user",translate("Run daemon as user"),translate("Leave blank to use default user."))
+e=t:taboption("basic",ListValue,"user",translate("Run daemon as user"),translate("留空以使用默认用户。"))
 local o
 for t in luci.util.execi("cat /etc/passwd | cut -d ':' -f1")do
 e:value(t)
