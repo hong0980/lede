@@ -235,8 +235,5 @@ msgstr "错误：找不到正确的md号码"
 msgid "Warnning !! \nTHIS WILL OVERWRITE EXISTING PARTITIONS!! \nModify the partition table?"
 msgstr "警告！！\n 将覆盖现有分区！！\n 确定修改分区表吗？"
 
-msgid ""
-msgstr ""
-
-msgid ""
-msgstr ""
+msgid "Creation"
+msgstr "创建"

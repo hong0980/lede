@@ -255,7 +255,7 @@ end
 end
 if nixio.fs.access("/bin/nuc")then
 s:tab("mode",translate("模式切换(适用软路由）"),translate("<br />可以在这里切换NUC和正常模式，重置你的网络设置。<br /><font color=\"Red\"><strong>点击后会立即重启设备，没有确认过程，请谨慎操作！</strong></font><br/>"))
-o=s:taboption("mode",Button,"nucmode",translate("切换为NUC模式"),"<strong><font color=\"green\">本模式适合于单网口主机，如NUC、单网口电脑，需要配合VLAN交换机使用！<br />设置教程：</font><a style=\"color: #ff0000;\" href=\"http://koolshare.cn/forum.php?mod=viewthread&tid=63503\">跳转链接到Koolshare论坛教程贴</a></strong>")
+o=s:taboption("mode",Button,"nucmode",translate("切换为NUC模式"),"<strong><font color=\"green\">本模式适合于单网口主机，如NUC、单网口电脑，需要配合VLAN交换机使用！<br />默认gateway是：192.168.2.1，ipaddr是192.168.2.150。用本机接口LAN接上级LAN当NAS。<br />设置教程：</font><a style=\"color: #ff0000;\" href=\"http://koolshare.cn/forum.php?mod=viewthread&tid=63503\">跳转链接到Koolshare论坛教程贴</a></strong>")
 o.inputtitle=translate("NUC模式")
 o.inputstyle="reload"
 o.write=function()
