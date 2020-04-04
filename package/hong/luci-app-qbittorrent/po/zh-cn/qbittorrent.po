@@ -500,8 +500,8 @@ msgstr "本页是/etc/config/qbittorrent下的配置文档内容。"
 msgid "Leave blank to use default user."
 msgstr "留空以使用默认用户。"
 
-msgid ""
-msgstr ""
+msgid "Open Web Interface"
+msgstr "打开 Web 管理界面"
 
 msgid ""
 msgstr ""
