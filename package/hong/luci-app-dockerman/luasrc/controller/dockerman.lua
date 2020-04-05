@@ -10,8 +10,8 @@ module("luci.controller.dockerman",package.seeall)
 
 function index()
 
-  entry({"admin", "services","docker"}, firstchild(), "Docker", 40).dependent = false
-  entry({"admin", "services","docker","overview"},cbi("dockerman/overview"),_("Overview"),0).leaf=true
+  entry({"admin","services","docker"}, firstchild(), "Docker", 40).dependent = false
+  entry({"admin","services","docker","overview"},cbi("dockerman/overview"),_("Overview"),0).leaf=true
 
   local remote = luci.model.uci.cursor():get("dockerman", "local", "remote_endpoint")
   if remote ==  nil then
@@ -24,24 +24,24 @@ function index()
   end
 
   if (require "luci.model.docker").new():_ping().code ~= 200 then return end
-  entry({"admin", "services","docker","containers"},form("dockerman/containers"),_("Containers"),1).leaf=true
-  entry({"admin", "services","docker","images"},form("dockerman/images"),_("Images"),2).leaf=true
-  entry({"admin", "services","docker","networks"},form("dockerman/networks"),_("Networks"),3).leaf=true
-  entry({"admin", "services","docker","volumes"},form("dockerman/volumes"),_("Volumes"),4).leaf=true
-  entry({"admin", "services","docker","events"},call("action_events"),_("Events"),5)
-  entry({"admin", "services","docker","newcontainer"},form("dockerman/newcontainer")).leaf=true
-  entry({"admin", "services","docker","newnetwork"},form("dockerman/newnetwork")).leaf=true
-  entry({"admin", "services","docker","container"},form("dockerman/container")).leaf=true
-  entry({"admin", "services","docker","container_stats"},call("action_get_container_stats")).leaf=true
-  entry({"admin", "services","docker","container_get_archive"},call("download_archive")).leaf=true
-  entry({"admin", "services","docker","container_put_archive"},call("upload_archive")).leaf=true
-  entry({"admin", "services","docker","images_save"},call("save_images")).leaf=true
-  entry({"admin", "services","docker","images_load"},call("load_images")).leaf=true
-  entry({"admin", "services","docker","images_import"},call("import_images")).leaf=true
-  entry({"admin", "services","docker","images_get_tags"},call("get_image_tags")).leaf=true
-  entry({"admin", "services","docker","images_tag"},call("tag_image")).leaf=true
-  entry({"admin", "services","docker","images_untag"},call("untag_image")).leaf=true
-  entry({"admin", "services","docker","confirm"},call("action_confirm")).leaf=true
+  entry({"admin","services","docker","containers"},form("dockerman/containers"),_("Containers"),1).leaf=true
+  entry({"admin","services","docker","images"},form("dockerman/images"),_("Images"),2).leaf=true
+  entry({"admin","services","docker","networks"},form("dockerman/networks"),_("Networks"),3).leaf=true
+  entry({"admin","services","docker","volumes"},form("dockerman/volumes"),_("Volumes"),4).leaf=true
+  entry({"admin","services","docker","events"},call("action_events"),_("Events"),5)
+  entry({"admin","services","docker","newcontainer"},form("dockerman/newcontainer")).leaf=true
+  entry({"admin","services","docker","newnetwork"},form("dockerman/newnetwork")).leaf=true
+  entry({"admin","services","docker","container"},form("dockerman/container")).leaf=true
+  entry({"admin","services","docker","container_stats"},call("action_get_container_stats")).leaf=true
+  entry({"admin","services","docker","container_get_archive"},call("download_archive")).leaf=true
+  entry({"admin","services","docker","container_put_archive"},call("upload_archive")).leaf=true
+  entry({"admin","services","docker","images_save"},call("save_images")).leaf=true
+  entry({"admin","services","docker","images_load"},call("load_images")).leaf=true
+  entry({"admin","services","docker","images_import"},call("import_images")).leaf=true
+  entry({"admin","services","docker","images_get_tags"},call("get_image_tags")).leaf=true
+  entry({"admin","services","docker","images_tag"},call("tag_image")).leaf=true
+  entry({"admin","services","docker","images_untag"},call("untag_image")).leaf=true
+  entry({"admin","services","docker","confirm"},call("action_confirm")).leaf=true
 end
 
 function action_events()

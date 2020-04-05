@@ -50,16 +50,17 @@
 
 		local eth_info = luci.sys.exec("ethinfo")
 
-		local user_info = tonumber(luci.sys.exec("cat /proc/net/arp | grep '0x2' | wc -l")) or 0
-		local cpu_usage = fs.readfile("/tmp/cpuusage") or "6.6%"
+		local user_info = luci.sys.exec("cat /proc/net/arp | grep '0x2' | wc -l") or 0
+		
+		local cpu_usage = (luci.sys.exec("expr 100 - $(top -n 1 | grep 'CPU:' | awk -F '%' '{print$4}' | awk -F ' ' '{print$2}')") or "6") .. "%"
 		luci.sys.exec("/sbin/getcpu &")
 		local rv = {
+			cpuusage    = cpu_usage,
 			cpuinfo    = cpu_info,
 			ethinfo    = eth_info,
 			userinfo    = user_info,
 			uptime     = sysinfo.uptime or 0,
 			localtime  = os.date("%Y年%m月%d日") .. " " .. translate(os.date("%A")) .. " " .. os.date("%X"),
-			cpuusage   = luci.sys.exec("echo -e `expr 100 - $(top -n 1 | grep 'CPU:' | awk -F '%' '{ print $4 }' | awk -F ' ' '{ print $2 }')`%") or "0%",
 			loadavg    = sysinfo.load or { 0, 0, 0 },
 			memory     = meminfo,
 			memcached  = mem_cached,
@@ -87,12 +88,12 @@
 
 		if wan6 then
 			rv.wan6 = {
-				ip6addr = wan6:ip6addr(),
-				gw6addr = wan6:gw6addr(),
-				dns     = wan6:dns6addrs(),
-				uptime  = wan6:uptime(),
-				ifname  = wan6:ifname(),
-				link    = wan6:adminlink()
+				ip6addr   = wan6:ip6addr(),
+				gw6addr   = wan6:gw6addr(),
+				dns       = wan6:dns6addrs(),
+				uptime    = wan6:uptime(),
+				ifname    = wan6:ifname(),
+				link      = wan6:adminlink()
 			}
 		end
 
@@ -634,7 +635,7 @@
 			<% end %>
 
 			var e;
-			
+
 			if (e = document.getElementById('ethinfo'))			{
 				var ports = eval('(' + info.ethinfo + ')');
 				var tmp = "";
@@ -659,7 +660,10 @@
 				e.innerHTML = info.userinfo;
 
 			if (e = document.getElementById('cpuinfo'))
-				e.innerHTML = info.cpuinfo;	
+				e.innerHTML = info.cpuinfo;
+				
+			if (e = document.getElementById('cpuusage'))
+				e.innerHTML = info.cpuusage;
 
 			if (e = document.getElementById('loadavg'))
 				e.innerHTML = String.format(
@@ -668,8 +672,6 @@
 					info.loadavg[1] / 65535.0,
 					info.loadavg[2] / 65535.0
 				);
-			if (e = document.getElementById('cpuusage'))
-				e.innerHTML = info.cpuusage;
 
 			if (e = document.getElementById('memtotal'))
 				e.innerHTML = progressbar(
@@ -716,18 +718,18 @@
 	<table width="100%" cellspacing="10">
 		<tr><td width="33%"><%:Hostname%></td><td><%=luci.sys.hostname() or "?"%></td></tr>
 		<tr><td width="33%"><%:Model%></td><td><%=pcdata(boardinfo.model or "?")%> <%=luci.sys.exec("cat /etc/bench.log") or " "%></td></tr>
+		<tr><td width="33%"><%:CPU Info%></td><td id="cpuinfo">-</td></tr>
 		<tr><td width="33%"><%:Firmware Version%></td><td>
 			<%=pcdata(ver.distname)%> <%=pcdata(ver.distversion)%> /
-			<%=pcdata(ver.luciname)%> (<%=pcdata(ver.luciversion)%>) 
+			<%=pcdata(ver.luciname)%> (<%=pcdata(ver.luciversion)%>)
 		</td></tr>
-		<tr><td width="33%"><%:CPU Info%></td><td id="cpuinfo">-</td></tr>
 		<tr><td width="33%"><%:Kernel Version%></td><td><%=unameinfo.release or "?"%></td></tr>
-    <tr><td width="33%"><%:RAM Size%></td><td><%=luci.sys.exec("dmesg | awk -F 'Memory: |K/|K available' '/Memory:.*available/{print $3/1024}'") or "?"%>MB</td></tr>
+        <tr><td width="33%"><%:RAM Size%></td><td><%=luci.sys.exec("dmesg | awk -F 'Memory: |K/|K available' '/Memory:.*available/{print $3/1024}'") or "?"%>MB</td></tr>
 		<tr><td width="33%"><%:Local Time%></td><td id="localtime">-</td></tr>
 		<tr><td width="33%"><%:Uptime%></td><td id="uptime">-</td></tr>
 		<tr><td width="33%"><%:Load Average%></td><td id="loadavg">-</td></tr>
 		<tr><td width="33%"><%:CPU usage%></td><td id="cpuusage">-</td></tr>
-</table>
+    </table>
 </fieldset>
 
 <fieldset class="cbi-section">
@@ -789,21 +791,6 @@
 	</table>
 </fieldset>
 
-<% if has_dsl then %>
-<fieldset class="cbi-section">
-       <legend><%:DSL%></legend>
-       <table width="100%" cellspacing="10">
-               <tr><td width="33%" style="vertical-align:top"><%:DSL Status%></td><td>
-                       <table><tr>
-                               <td id="dsl_i" style="width:16px; text-align:center; padding:3px"><img src="<%=resource%>/icons/ethernet_disabled.png" /><br /><small>?</small></td>
-                               <td id="dsl_s" style="vertical-align:middle; padding: 3px"><em><%:Collecting data...%></em></td>
-                       </tr></table>
-               </td></tr>
-       </table>
-</fieldset>
-<% end %>
-
-
 <% if has_dhcp then %>
 <fieldset class="cbi-section">
 	<legend><%:DHCP Leases%></legend>
@@ -821,6 +808,18 @@
 	</table>
 </fieldset>
 
+<% if has_dsl then %>
+<fieldset class="cbi-section">
+       <legend><%:DSL%></legend>
+       <table width="100%" cellspacing="10">
+               <tr><td width="33%" style="vertical-align:top"><%:DSL Status%></td><td>
+                       <table><tr>
+                               <td id="dsl_i" style="width:16px; text-align:center; padding:3px"><img src="<%=resource%>/icons/ethernet_disabled.png" /><br /><small>?</small></td>
+                               <td id="dsl_s" style="vertical-align:middle; padding: 3px"><em><%:Collecting data...%></em></td>
+                       </tr></table>
+               </td></tr>
+       </table>
+</fieldset>
 <% end %>
 
 <% if has_wifi then %>
@@ -831,7 +830,6 @@
 		<tr><td><em><%:Collecting data...%></em></td></tr>
 	</table>
 </fieldset>
-
 <% end %>
 
 <% local raid = {}

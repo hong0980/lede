@@ -283,14 +283,20 @@ msgstr "服务端"
 msgid "Daemon unix socket (unix:///var/run/docker.sock) or TCP Remote Hosts (tcp://0.0.0.0:2375), default: unix:///var/run/docker.sock"
 msgstr "后台 Unix socket (unix:///var/run/docker.sock) 或 TCP 远程服务端 (tcp://0.0.0.0:2375)，默认: unix:///var/run/docker.sock"
 
+msgid "Resources"
+msgstr "资源"
+
 msgid "Stats"
 msgstr "状态"
 
 msgid "Logs"
 msgstr "日志"
 
-msgid "Network TX/RX"
-msgstr "网络发送/接收"
+msgid "TX/RX"
+msgstr "(累计)发送/接收"
+
+msgid "Upload/Download"
+msgstr "(当前)上传/下载"
 
 msgid "CPU Useage"
 msgstr "CPU用量"
