@@ -53,7 +53,7 @@
 		local user_info = luci.sys.exec("cat /proc/net/arp | grep '0x2' | wc -l") or 0
 		
 		local cpu_usage = (luci.sys.exec("expr 100 - $(top -n 1 | grep 'CPU:' | awk -F '%' '{print$4}' | awk -F ' ' '{print$2}')") or "6") .. "%"
-		luci.sys.exec("/sbin/getcpu &")
+
 		local rv = {
 			cpuusage    = cpu_usage,
 			cpuinfo    = cpu_info,
@@ -91,7 +91,9 @@
 				ip6addr   = wan6:ip6addr(),
 				gw6addr   = wan6:gw6addr(),
 				dns       = wan6:dns6addrs(),
+				ip6prefix = wan6:ip6prefix(),
 				uptime    = wan6:uptime(),
+				proto     = wan6:proto(),
 				ifname    = wan6:ifname(),
 				link      = wan6:adminlink()
 			}
@@ -675,7 +677,7 @@
 
 			if (e = document.getElementById('memtotal'))
 				e.innerHTML = progressbar(
-					Math.floor((info.memory.free + info.memory.buffered) / 1048576) + " <%:MB%>",
+					Math.floor(((info.memory.free + info.memory.buffered) / 1048576) + (info.memcached / 1024)) + " <%:MB%>",
 					Math.floor(info.memory.total / 1048576) + " <%:MB%>"
 				);
 
@@ -729,16 +731,16 @@
 		<tr><td width="33%"><%:Uptime%></td><td id="uptime">-</td></tr>
 		<tr><td width="33%"><%:Load Average%></td><td id="loadavg">-</td></tr>
 		<tr><td width="33%"><%:CPU usage%></td><td id="cpuusage">-</td></tr>
-    </table>
+</table>
 </fieldset>
-
+<!-- 
 <fieldset class="cbi-section">
 	<legend><%:Weather%></legend>
 
 	<table width="100%" cellspacing="10">
 		<tr><td width="33%"><%:Local Weather%></td><td > <iframe width="800" scrolling="no" height="120" frameborder="0" allowtransparency="true" src="//i.tianqi.com/index.php?c=code&id=19&icon=3&py=xiaoshan&temp=1&num=5&site=12"></iframe>		
 	</table>
-</fieldset>
+</fieldset> -->
 
 <fieldset class="cbi-section">
 	<legend><%:Memory%></legend>
@@ -807,6 +809,25 @@
 		</tr>
 	</table>
 </fieldset>
+
+<% if has_ipv6 then %>
+<fieldset class="cbi-section" style="display:none">
+	<legend><%:DHCPv6 Leases%></legend>
+
+	<table class="cbi-section-table" id="lease6_status_table">
+		<tr class="cbi-section-table-titles">
+			<th class="cbi-section-table-cell"><%:Host%></th>
+			<th class="cbi-section-table-cell"><%:IPv6-Address%></th>
+			<th class="cbi-section-table-cell"><%:DUID%></th>
+			<th class="cbi-section-table-cell"><%:Leasetime remaining%></th>
+		</tr>
+		<tr class="cbi-section-table-row">
+			<td colspan="4"><em><br /><%:Collecting data...%></em></td>
+		</tr>
+	</table>
+</fieldset>
+<% end %>
+<% end %>
 
 <% if has_dsl then %>
 <fieldset class="cbi-section">

@@ -32,6 +32,7 @@ define Package/autocore/install
 	$(INSTALL_BIN) ./files/autocore $(1)/etc/init.d/autocore
 	$(INSTALL_DIR) $(1)/etc
 	$(INSTALL_DATA) ./files/index.htm $(1)/etc/index.htm
+	$(INSTALL_DATA) ./files/poweroff.htm $(1)/etc/poweroff.htm
 	$(INSTALL_DIR) $(1)/sbin
 	$(CP) ./files/sbin/* $(1)/sbin
 endef
