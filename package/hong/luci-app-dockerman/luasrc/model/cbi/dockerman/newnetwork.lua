@@ -23,7 +23,7 @@ s.anonymous = true
 d = s:option(Value, "name", translate("Network Name"))
 d.rmempty = true
 
-d = s:option(ListValue, "dirver", translate("Driver"))
+d = s:option(ListValue, "dirver", translate("Driver"), translate("Network mode"))
 d.rmempty = true
 d:value("bridge", "bridge")
 d:value("macvlan", "macvlan")
@@ -40,7 +40,7 @@ end
 d.default="br-lan"
 d.placeholder="br-lan"
 
-d = s:option(Value, "macvlan_mode", translate("Macvlan Mode"))
+d = s:option(Value, "macvlan_mode", translate("Macvlan Mode"), translate("Macvlan Mode"))
 d.rmempty = true
 d:depends("dirver", "macvlan")
 d.default="bridge"
@@ -49,7 +49,7 @@ d:value("private", "private")
 d:value("vepa", "vepa")
 d:value("passthru", "passthru")
 
-d = s:option(Value, "ipvlan_mode", translate("Ipvlan Mode"))
+d = s:option(Value, "ipvlan_mode", translate("Ipvlan Mode"), translate("Ipvlan Mode"))
 d.rmempty = true
 d:depends("dirver", "ipvlan")
 d.default="l3"
@@ -63,7 +63,7 @@ d.enabled = 1
 d.default = 0
 d:depends("dirver", "overlay")
 
-d = s:option(DynamicList, "options", translate("Options"))
+d = s:option(DynamicList, "options", translate("Options"), translate("Options"))
 d.rmempty = true
 d.placeholder="com.docker.network.driver.mtu=1500"
 
