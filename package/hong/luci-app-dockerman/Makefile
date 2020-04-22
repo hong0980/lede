@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-dockerman
-PKG_VERSION:=v0.5.9
+PKG_VERSION:=v0.5.10
 PKG_RELEASE:=beta
 PKG_MAINTAINER:=lisaac <https://github.com/lisaac/luci-app-dockerman>
 PKG_LICENSE:=AGPL-3.0
@@ -17,7 +17,18 @@ define Package/$(PKG_NAME)
 	 DEPENDS:=+luci-lib-docker +e2fsprogs +fdisk +docker-ce
 endef
 
+define Package/$(PKG_NAME)/description
+	Docker Manager interface for LuCI
+endef
 define Build/Compile
+endef
+
+define Package/$(PKG_NAME)/postinst
+#!/bin/sh
+if [ -z "$${IPKG_INSTROOT}" ]; then
+	( . /etc/uci-defaults/luci-app-dockerman ) && rm -f /etc/uci-defaults/luci-app-dockerman
+fi
+exit 0
 endef
 
 define Package/$(PKG_NAME)/install

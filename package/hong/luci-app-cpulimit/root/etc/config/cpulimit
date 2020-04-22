@@ -3,23 +3,3 @@ config list
 	option enabled '1'
 	option exename 'ssr-redir'
 	option limit '20'
-
-config list
-	option enabled '1'
-	option exename 'adbyby'
-	option limit '20'
-
-config list
-	option enabled '1'
-	option exename 'transmission-daemon'
-	option limit '20'
-
-config list
-	option enabled '1'
-	option exename 'aria2c'
-	option limit '20'
-
-config list
-	option enabled '1'
-	option exename 'qbittorrent-nox'
-	option limit '20'
