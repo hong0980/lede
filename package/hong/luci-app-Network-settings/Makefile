@@ -5,7 +5,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=luci-app-advanced-settings
+PKG_NAME:=luci-app-Network-settings
 PKG_VERSION:=2.0-20200317
 PKG_RELEASE:=1
 

@@ -494,14 +494,92 @@ msgstr "运行日志"
 msgid "This page is the log document content of qbittorrent."
 msgstr "本页是qBittorrent的日志文档内容。"
 
-msgid "This page is the content of the configuration document under /etc/config/qbittorrent."
-msgstr "本页是/etc/config/qbittorrent下的配置文档内容。"
+msgid "This page is the content of the configuration document under."
+msgstr "本页是qbittorrent的配置文档内容。"
 
 msgid "Leave blank to use default user."
 msgstr "留空以使用默认用户。"
 
 msgid "Open Web Interface"
 msgstr "打开 Web 管理界面"
+
+msgid "Global settings"
+msgstr "全局设置"
+
+msgid "Collecting data..."
+msgstr "正在收集数据..."
+
+msgid "Last 30 lines of log file:"
+msgstr "日志文件的最新 30 行："
+
+msgid "Last 30 lines of syslog:"
+msgstr "系统日志的最新 30 行："
+
+msgid "Failed to load log data."
+msgstr "获取日志数据失败。"
+
+msgid "Loading"
+msgstr "正在加载"
+
+msgid "Log Data"
+msgstr "日志数据"
+
+msgid "No log data."
+msgstr "无日志数据。"
+
+msgid "Refresh every 10 seconds."
+msgstr "每 10 秒刷新。"
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
+
+msgid ""
+msgstr ""
 
 msgid ""
 msgstr ""

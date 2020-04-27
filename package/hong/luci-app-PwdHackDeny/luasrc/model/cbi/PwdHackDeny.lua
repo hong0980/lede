@@ -16,7 +16,7 @@ else
 end
 
 m = Map("PwdHackDeny", translate("PwdHackDeny"))
-m.description = translate("<font style='color:green'>用于监控SSH以及路由异常登录情况，频率为10分钟一次，外网统计IP次数，内网统计MAC次数，密码错误历史纪录达到5次，不论内外网，都永久禁止连接dropbear以及uhttp的登录端口，不会因为重启而停止，直到手动删除禁止名单里相应的IP/MAC为止。</font>" .. button
+m.description = translate("<font style='color:green'>监控SSH及WEB异常登录，密码错误达到设定次数的内外网客户端都禁止连接SSH以及WEB登录端口，直到手动删除相应的IP或MAC名单为止。</font>" .. button
         .. "<br/><br/>" .. translate("运行状态").. " : "  .. state_msg .. "<br />")
 
 s = m:section(TypedSection, "PwdHackDeny")
@@ -26,14 +26,14 @@ enabled = s:option(Flag, "enabled", translate("启用"), translate("启用或禁
 enabled.default = 0
 enabled.rmempty = true
 
-setport =s:option(Value,"time",translate("巡查时间"))
-setport.description = translate("单位为“秒”，如果使用环境比较恶劣可以适当缩短巡查时间。")
-setport.placeholder=600
-setport.default=600
+setport =s:option(Value,"time",translate("巡查时间（秒）"))
+setport.description = translate("循环查询日志时间间隔，如果使用环境比较恶劣可以适当缩短。")
+setport.placeholder=5
+setport.default=5
 setport.datatype="port"
 setport.rmempty=false
 
-setport =s:option(Value,"sum",translate("失败次数"))
+setport =s:option(Value,"sum",translate("失败次数（次）"))
 setport.description = translate("登入密码错误次数达到此数值的IP就会被永久加入禁止名单。")
 setport.placeholder=5
 setport.default=5
@@ -43,7 +43,7 @@ setport.rmempty=false
 
 s = m:section(TypedSection, "PwdHackDeny")
 
-s:tab("config1", translate("<font style='color:gray'>SSH错误登录日志</font>"))
+s:tab("config1", translate("<font style='color:gray'>SSH登录日志</font>"))
 conf = s:taboption("config1", Value, "editconf1", nil, translate("<font style='color:red'>新的信息需要刷新页面才会有所显示。</font>"))
 conf.template = "cbi/tvalue"
 conf.rows = 25
@@ -54,7 +54,7 @@ function conf.cfgvalue()
 	return fs.readfile("/tmp/PwdHackDeny/badip.log.ssh", value) or ""
 end
 
-s:tab("config2", translate("<font style='color:gray'>web错误登录日志</font>"))
+s:tab("config2", translate("<font style='color:gray'>WEB登录日志</font>"))
 conf = s:taboption("config2", Value, "editconf2", nil, translate("<font style='color:red'>新的信息需要刷新页面才会有所显示。</font>"))
 conf.template = "cbi/tvalue"
 conf.rows = 25
@@ -103,7 +103,7 @@ function conf.write(self, section, value)
     end
 end
 
-local e=luci.http.formvalue("cbi.apply")
+e = luci.http.formvalue("cbi.apply")
 if e then
   io.popen("/etc/init.d/PwdHackDeny start")
 end

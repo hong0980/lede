@@ -15,8 +15,8 @@ else
         state_msg = "<b><font color=\"red\">" .. translate("没有运行") .. "</font></b>"
 end
 
-m = Map("cowbping", translate("cowbping"))
-m.description = translate("<font style='color:green'>定期ping一个网址以检测网络有无通畅，如果网络不通就执行相关设定动作以求排除故障。</font>" .. button
+m = Map("cowbping", translate("CowBPing"))
+m.description = translate("<font style='color:green'>定期ping一个网址以检测网络是否通畅，如果网络不通就执行相关设定动作以求排除故障。</font>" .. button
         .. "<br/><br/>" .. translate("运行状态").. " : "  .. state_msg .. "<br />")
 
 s = m:section(TypedSection, "cowbping")
@@ -33,22 +33,22 @@ setport.default=60
 setport.datatype="port"
 setport.rmempty=false
 
-setport =s:option(Value,"address",translate("地址(IP或域名)"))
+setport =s:option(Value,"address",translate("网址(IP或域名)"))
 setport.description = translate("用来执行ping检测的网络地址。")
 setport.placeholder="8.8.4.4"
 setport.default="8.8.4.4"
 setport.datatype="host"
 setport.rmempty=false
 
-setport =s:option(Value,"time",translate("重复时间（秒）"))
+setport =s:option(Value,"time",translate("检测间隔（秒）"))
 setport.description = translate("检测网络情况时间间隔，如果使用环境比较恶劣可以适当缩短。")
 setport.placeholder=60
 setport.default=60
 setport.datatype="port"
 setport.rmempty=false
 
-setport =s:option(Value,"pkglost",translate("丢包比例（%）"))
-setport.description = translate("丢包比例达到此数值就会视为网络不通。")
+setport =s:option(Value,"pkglost",translate("丢包比率（%）"))
+setport.description = translate("丢包比率达到此数值就会视为网络不通。")
 setport.placeholder=100
 setport.default=100
 setport.datatype="port"
@@ -61,25 +61,21 @@ setport.default=1
 setport.datatype="port"
 setport.rmempty=false
 
-enabled = s:option(ListValue, "work_mode", translate("执行动作"))
-enabled.description = translate("")
+enabled = s:option(ListValue, "work_mode", translate("执行命令"))
+enabled.description = translate("改中继MAC为随机生成，仅对只有一个无线模块的路由有效。")
 enabled:value("1", translate("1.重启系统"))
 enabled:value("2", translate("2.重启WAN"))
 enabled:value("3", translate("3.重启WIFI"))
-enabled:value("6", translate("4.重启WIFI并改中继随机MAC"))
+enabled:value("6", translate("4.重启WIFI、改中继MAC"))
 enabled:value("4", translate("5.重启网络"))
-enabled:value("5", translate("6.自定义命令"))
+enabled:value("7", translate("6.关机睡觉"))
+enabled:value("5", translate("7.自设命令"))
 enabled.default = 2
 
-setport =s:option(Value,"command",translate("自定义命令"))
-setport.description = translate("比如 /etc/init.d/xxx restart 。")
+setport =s:option(Value,"command",translate("自设命令"))
+setport.description = translate("格式如： iw wlan0 scan 。多条命令间用 ; 隔开。")
 setport.rmempty=true
 setport:depends("work_mode", 5)
-
-local a = luci.http.formvalue("cbi.apply")
-if a then
-  io.popen("/etc/init.d/cowbping restart")
-end
 
 return m
 

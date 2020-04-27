@@ -1,6 +1,5 @@
-
 config PwdHackDeny 'PwdHackDeny'
 	option enabled '0'
-	option time '600'
+	option time '5'
 	option sum '5'
 
