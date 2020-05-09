@@ -82,7 +82,7 @@
              });
          } else {
 -            toast.error("This remote does not support About");
-+            toast.error("此遥控器不支持");
++            toast.error("此远程服务不支持");
          }
  
      };
@@ -114,7 +114,7 @@
          } else {
              // Cleanup is not allowed
 -            toast.error("Clearing trash is not allowed on this remote");
-+            toast.error("这个遥控器不允许清除垃圾");
++            toast.error("这个远程服务不允许清除垃圾");
          }
      };
  
@@ -513,7 +513,7 @@
  
              if (remoteName === "") {
 -                return (<div>No remote is selected. Select a remote from above to show files.</div>);
-+                return (<div>没有选择遥控器。从上方选择一个遥控器以显示文件。</div>);
++                return (<div>没有选择远程服务。从上方选择一个远程服务以显示文件。</div>);
              }
  
  
@@ -599,14 +599,14 @@
              return (
                  <div>
 -                    Error loading remotes. Please try again.
-+                    加载遥控器时出错。请再试一遍。
++                    加载远程服务时出错。请再试一遍。
                  </div>
              )
          } else if (isEmpty) {
              return (
                  <div>
 -                    Add some remotes to see them here <span role="img" aria-label="sheep">🐑</span>.
-+                    添加一些遥控器以在此处查看它们 <span role="img" aria-label="sheep">🐑</span>.
++                    添加一些远程服务以在此处查看它们 <span role="img" aria-label="sheep">🐑</span>.
                  </div>);
          } else {
  
