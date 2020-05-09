@@ -12,9 +12,15 @@
 	#log_text pre {
 		word-break: break-all;
 		margin: 0;
+		font-size : 10pt;
+		font-family :Arial;
+		<!-- background-color:#F0F0F0; -->
+		<!-- color : #202020; -->
 	}
 	.description {
 		background-color: #93ccff;
+		font-size : 15pt;
+
 	}
 
 ]]
@@ -40,15 +46,16 @@
 			}
 		}
 	);
-//]]></script>
+//]]>
+</script>
 <div class="cbi-map">
 	<h2 name="content"><%:qbittorrent%> - <%:Log Data%></h2>
 	<fieldset class="cbi-section">
+		<div style="text-align:right"><small><%:Refresh every 10 seconds.%></small></div>
 		<div id="log_text">
 			<img src="<%=resource%>/icons/loading.gif" alt="<%:Loading%>" style="vertical-align:middle" />
 			<%:Collecting data...%>
 		</div>
-		<div style="text-align:right"><small><%:Refresh every 10 seconds.%></small></div>
 	</fieldset>
 </div>
 

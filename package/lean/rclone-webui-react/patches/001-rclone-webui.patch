@@ -1,0 +1,1175 @@
+--- a/src/views/Base/BackendStatusCard/BackendStatusCard.js
++++ b/src/views/Base/BackendStatusCard/BackendStatusCard.js
+@@ -66,7 +66,7 @@
+                 <Card
+                     className={"text-center " + (isConnected ? "card-accent-info" : "card-accent-warning")}>
+                     <CardHeader>
+-                        rclone status
++                        rclone 状态
+                     </CardHeader>
+                     <CardBody>
+                         <StatusText checkStatus={checkStatus} connectivityStatus={isConnected} ipAddress={ipAddress}
+@@ -102,12 +102,12 @@
+     }
+     if (connectivityStatus) {
+         return (
+-            <p>The rclone backend is connected and working as expected.<br/>Current IP address is {ipAddress}
+-                <br/><strong> Username: </strong>{userName}</p>
++            <p>rclone后端已连接并按预期工作。<br/>当前IP地址为 {ipAddress}
++                <br/><strong> 用户名: </strong>{userName}</p>
+         );
+     } else {
+         return (
+-            <p>Cannot connect to rclone backend. There is a problem with connecting to {ipAddress}.</p>
++            <p>无法连接到rclone后端。连接到时出现问题 {ipAddress}.</p>
+ 
+         )
+     }
+--- a/src/views/Base/BandwidthStatusCard/BandwidthStatusCard.js
++++ b/src/views/Base/BandwidthStatusCard/BandwidthStatusCard.js
+@@ -87,7 +87,7 @@
+                 <Col lg={showChangeBandwidth ? 6 : 12} sm={12}>
+                     <BandwidthWidget icon="icon-speedometer" color="danger"
+                                      header={(bandwidth.rate !== "off") ? bandwidth.rate : "Unlimited"} lg={6} sm={12}>
+-                        Current bandwidth <Button color="link"
++                        当前带宽 <Button color="link"
+                                                   onClick={this.toggleShowChangeBandwidth}>{!showChangeBandwidth ? "Change" : "Close"}
+                         <i
+                             className={"fa fa-lg fa-angle-" + (!showChangeBandwidth ? "right" : "left")}/></Button>
+@@ -95,23 +95,23 @@
+                 </Col>
+                 <Col lg={6} sm={12} className={showChangeBandwidth ? "" : "d-none"}>
+                     <Card>
+-                        <CardHeader>Change bandwidth</CardHeader>
++                        <CardHeader>更改带宽</CardHeader>
+                         <CardBody>
+                             <Form onSubmit={this.setBandwidth}>
+                                 <FormGroup row>
+-                                    <Label for="bandwidthValue" sm={5}>New Bandwidth</Label>
++                                    <Label for="bandwidthValue" sm={5}>新带宽</Label>
+                                     <Col sm={7}>
+                                         <Input type="text" value={bandwidthText}
+                                                valid={!hasError} invalid={hasError}
+                                                id="bandwidthValue" onChange={this.changeBandwidthInput}>
+                                         </Input>
+-                                        <FormFeedback valid>Keep empty to reset.</FormFeedback>
+-                                        <FormFeedback>The bandwidth should be of the form 1M|2M|1G|1K|1.1K
+-                                            etc</FormFeedback>
++                                        <FormFeedback valid>保持空以重置。</FormFeedback>
++                                        <FormFeedback>带宽应为1M | 2M | 1G | 1K | 1.1K
++                                            等</FormFeedback>
+ 
+                                     </Col>
+                                 </FormGroup>
+-                                <Button className="float-right" color="success" type="submit">Set</Button>
++                                <Button className="float-right" color="success" type="submit">设置</Button>
+ 
+                             </Form>
+                         </CardBody>
+--- a/src/views/Base/FileOperations/FileOperations.js
++++ b/src/views/Base/FileOperations/FileOperations.js
+@@ -58,7 +58,7 @@
+         if (fsInfo && fsInfo.Features && fsInfo.Features.CanHaveEmptyDirectories) {
+             this.setState({newFolderModalIsVisible: true});
+         } else {
+-            toast.error("This remote cannot have empty directories");
++            toast.error("此远程服务器不能有空目录");
+         }
+     };
+ 
+@@ -117,7 +117,7 @@
+                 }
+             });
+         } else {
+-            toast.error("This remote does not support About");
++            toast.error("此遥控器不支持");
+         }
+ 
+     };
+@@ -126,7 +126,7 @@
+         const {fsInfo} = this.props;
+         if (fsInfo && fsInfo.Features && fsInfo.Features.CleanUp) {
+ 
+-            if (window.confirm("Are you sure you want to clear the trash. This operation cannot be undone")) {
++            if (window.confirm("你确定要清理垃圾吗。此操作无法撤消")) {
+ 
+                 const {currentPath, containerID} = this.props;
+                 let {remoteName} = currentPath;
+@@ -139,19 +139,19 @@
+                     fs: remoteName
+                 }).then((res) => {
+                         if (res.status === 200) {
+-                            toast('Trash Cleaned');
++                            toast('垃圾清理');
+                             this.props.getAbout(containerID);
+ 
+                         }
+                     },
+                     (err) => {
+-                        toast.error("Error clearing trash");
++                        toast.error("清除垃圾时出错");
+                     }
+                 )
+             }
+         } else {
+             // Cleanup is not allowed
+-            toast.error("Clearing trash is not allowed on this remote");
++            toast.error("这个遥控器不允许清除垃圾");
+         }
+     };
+ 
+@@ -179,9 +179,9 @@
+                         <div className="btn-group" role="group"
+                              aria-label="Button group with nested dropdown">
+                             {/*<a className="btn" href="#"><i className="cui-speech"></i></a>*/}
+-                            {/*<a className="btn" href="#"><i className="cui-graph"></i> Dashboard</a>*/}
++                            {/*<a className="btn" href="#"><i className="cui-graph"></i> 仪表板</a>*/}
+                             <Button onClick={this.toggleAboutModal} className="btn"><i
+-                                className="cui-settings"/> Settings</Button>
++                                className="cui-settings"/> 设置</Button>
+                         </div>
+                     </li>
+                 </ol>
+@@ -206,19 +206,19 @@
+                                     onClick={this.changeLoadMedia}><i
+                                 className={"fa fa-lg fa-picture-o"} id="LoadMediaButton"/></Button>
+                             <UncontrolledTooltip placement="right" target="LoadMediaButton">
+-                                Load Media
++                                加载媒体
+                             </UncontrolledTooltip>
+                             <InputGroup>
+                                 <InputGroupAddon addonType="prepend">
+                                     <Button style={{zIndex: 1}} type="button" color="primary"><i
+-                                        className="fa fa-search"/> Search</Button>
++                                        className="fa fa-search"/> 搜索</Button>
+                                 </InputGroupAddon>
+-                                <Input type="text" id="input1-group2" placeholder="Search" value={searchQuery}
++                                <Input type="text" id="input1-group2" placeholder="搜索" value={searchQuery}
+                                        onChange={this.changeSearch}/>
+                             </InputGroup>
+                             <ButtonDropdown isOpen={dropdownOpen} toggle={this.toggleDropDown}>
+                                 <DropdownToggle caret>
+-                                    More
++                                    更多
+                                 </DropdownToggle>
+                                 <DropdownMenu>
+                                     <DropdownItem>View Type{' '}
+@@ -271,13 +271,13 @@
+                                         <div className="chart-wrapper">
+                                             <p>Space Usage (in GB)</p>
+                                             {doughnutData && !isEmpty(doughnutData) ? <Doughnut data={doughnutData}/> :
+-                                                <React.Fragment><Spinner color="primary"/>Loading</React.Fragment>}
++                                                <React.Fragment><Spinner color="primary"/>加载中</React.Fragment>}
+                                         </div>
+                                     </Col>
+                                 </Row>
+                                 <Row>
+                                     <Col sm={12}>
+-                                        <Button color="danger" onClick={this.handleCleanTrash}>Clean Trash <i
++                                        <Button color="danger" onClick={this.handleCleanTrash}>清理垃圾 <i
+                                             className="fa fa-lg fa-trash"/></Button>
+                                     </Col>
+                                 </Row>
+--- a/src/views/Base/LinkShareModal/LinkShareModal.js
++++ b/src/views/Base/LinkShareModal/LinkShareModal.js
+@@ -37,7 +37,7 @@
+         return (
+             <div>
+                 <Modal isOpen={isVisible} toggle={this.toggle}>
+-                    <ModalHeader toggle={this.toggle} data-test="modalHeader">Public link generated.</ModalHeader>
++                    <ModalHeader toggle={this.toggle} data-test="modalHeader">生成公共链接。</ModalHeader>
+                     <ModalBody data-test="modalBody">
+                         <Input readOnly value={linkUrl} onFocus={this.handleFocus}/>
+                         {
+--- a/src/views/Base/NewDriveAuthModal/NewDriveAuthModal.js
++++ b/src/views/Base/NewDriveAuthModal/NewDriveAuthModal.js
+@@ -23,11 +23,11 @@
+             <div>
+                 <ErrorBoundary>
+                     <Modal isOpen={isVisible} toggle={this.toggle}>
+-                        <ModalHeader toggle={this.toggle} data-test="modalHeader">Configuring your drive.</ModalHeader>
++                        <ModalHeader toggle={this.toggle} data-test="modalHeader">配置驱动。</ModalHeader>
+                         <ModalBody data-test="modalBody">
+-                            A page will open for you with the authentication for your drive. This modal will
+-                            automatically
+-                            dismiss upon successful creation
++                            将为您打开一个带有驱动器身份验证的页面。
++                            成功创建后，
++                            此模式将自动关闭
+                         </ModalBody>
+                         <ModalFooter data-test="modalFooter">
+                             <Button color="primary" onClick={this.toggle}>Done</Button>{' '}
+--- a/src/views/Base/NewFolder/NewFolder.js
++++ b/src/views/Base/NewFolder/NewFolder.js
+@@ -62,15 +62,15 @@
+             this.disableForm(false);
+ 
+             this.toggle();
+-            toast.info(`Folder created: ${remotePath}`);
++            toast.info(`已创建文件夹： ${remotePath}`);
+             this.props.getFilesForContainerID(this.props.containerID);
+         } catch (error) {
+             this.disableForm(false);
+ 
+             if (error.response) {
+-                toast.error(`Error creating folder: ${error.response.data.error}`)
++                toast.error(`创建文件夹时出错： ${error.response.data.error}`)
+             } else {
+-                toast.error(`Error creating folder: ${error}`);
++                toast.error(`创建文件夹时出错： ${error}`);
+             }
+ 
+             // console.log(`Error occurred at operations/mkdir: ${e}, ${e.response}`);
+@@ -100,11 +100,11 @@
+ 
+             <Modal isOpen={isVisible} toggle={this.toggle} data-test="newFolderComponent">
+                 <Form onSubmit={this.handleSubmit}>
+-                    <ModalHeader toggle={this.toggle}>Create New folder
+-                        at {currentPath.remoteName}: {currentPath.remotePath}</ModalHeader>
++                    <ModalHeader toggle={this.toggle}>创建新文件夹
++                        在 {currentPath.remoteName}: {currentPath.remotePath}</ModalHeader>
+                     <ModalBody>
+                         <FormGroup row>
+-                            <Label for="folderName" sm={5}>Enter the name</Label>
++                            <Label for="folderName" sm={5}>输入名称</Label>
+                             <Col sm={7}>
+                                 <Input type="text" name="folderName" id="folderName" value={name}
+                                        onChange={this.changeName} required autoFocus>
+--- a/src/views/Base/RunningJobs/RunningJobs.js
++++ b/src/views/Base/RunningJobs/RunningJobs.js
+@@ -32,15 +32,15 @@
+     if (name && !isNaN(speed)) {
+ 
+         return (<Card>
+-            <CardHeader>Running Jobs</CardHeader>
++            <CardHeader>正在运行的工作</CardHeader>
+             <CardBody>
+                 <p>{name}</p> {/*Name of the file*/}
+                 <Progress value={percentage} className={"mb-2"}>{percentage} %</Progress> {/*percentage*/}
+-                <p><strong>Speed: </strong>{formatBytes(speed)}PS</p> {/*speed*/}
+-                <p><strong>Average Speed: </strong>{formatBytes(speedAvg)}PS</p> {/*speedAvg*/}
+-                <p><strong>Total transferred: </strong>{formatBytes(bytes)}</p> {/*bytes: convert to mb*/}
+-                <p><strong>Size: </strong>{formatBytes(size)}</p>
+-                <p><strong>ETA: </strong>{secondsToStr(eta)}</p>
++                <p><strong>速度: </strong>{formatBytes(speed)}PS</p> {/*speed*/}
++                <p><strong>平均速度: </strong>{formatBytes(speedAvg)}PS</p> {/*speedAvg*/}
++                <p><strong>总计转移: </strong>{formatBytes(bytes)}</p> {/*bytes: convert to mb*/}
++                <p><strong>大小: </strong>{formatBytes(size)}</p>
++                <p><strong>预计时间: </strong>{secondsToStr(eta)}</p>
+             </CardBody>
+ 
+         </Card>);
+@@ -87,40 +87,40 @@
+     const {speed, bytes, checks, elapsedTime, deletes, errors, transfers, lastError} = stats;
+     return (
+         <Card>
+-            <CardHeader><strong>Global Stats</strong></CardHeader>
++            <CardHeader><strong>全球统计</strong></CardHeader>
+             <CardBody>
+                 <table className="table">
+                     <tbody>
+                     <tr>
+-                        <td>Bytes Transferred:</td>
++                        <td>传输的字节数：</td>
+                         <td>{formatBytes(bytes)}</td>
+                     </tr>
+                     <tr>
+-                        <td>Average Speed:</td>
++                        <td>平均速度：</td>
+                         <td>{formatBytes(speed)}PS</td>
+                     </tr>
+                     <tr>
+-                        <td>Checks:</td>
++                        <td>检查：</td>
+                         <td>{checks}</td>
+                     </tr>
+                     <tr>
+-                        <td>Deletes:</td>
++                        <td>删除：</td>
+                         <td>{deletes}</td>
+                     </tr>
+                     <tr>
+-                        <td>Running since:</td>
++                        <td>运行时间：</td>
+                         <td>{secondsToStr(elapsedTime)}</td>
+                     </tr>
+                     <tr className={errors > 0 ? "table-danger" : ""}>
+-                        <td>Errors:</td>
++                        <td>错误：</td>
+                         <td>{errors}</td>
+                     </tr>
+                     <tr>
+-                        <td>Transfers:</td>
++                        <td>转移：</td>
+                         <td>{transfers}</td>
+                     </tr>
+                     <tr>
+-                        <td>Last Error:</td>
++                        <td>最后一个错误：</td>
+                         <td>{lastError}</td>
+                     </tr>
+ 
+@@ -255,7 +255,7 @@
+                         <Col sm={12} lg={4}>
+                             <Card>
+                                 <CardHeader>
+-                                    Speed
++                                    速度
+                                 </CardHeader>
+                                 <CardBody>
+                                     <div className="chart-wrapper">
+@@ -270,7 +270,7 @@
+                     </Row>
+                 );
+             } else {
+-                return (<div>Not connected to rclone.</div>)
++                return (<div>未连接到rclone。</div>)
+             }
+ 
+         } else if (mode === "card") {
+@@ -279,7 +279,7 @@
+                     <TransferringJobsRow transferring={transferring}/>
+                 );
+             } else {
+-                return (<div>Not connected to rclone.</div>);
++                return (<div>未连接到rclone。</div>);
+             }
+ 
+         } else if (mode === "modal") {
+--- a/src/views/Base/Widgets/AudioPlayer/AudioPlayer.js
++++ b/src/views/Base/Widgets/AudioPlayer/AudioPlayer.js
+@@ -23,7 +23,7 @@
+                     {/*<i className="fa fa-play-circle fa-4x"/>*/}
+                     <audio controls>
+                         <source src={playbackURL} type={MimeType}/>
+-                        Your browser does not support the audio tag.
++                        您的浏览器不支持音频标记。
+                     </audio>
+                 </Button>
+             </div>
+@@ -40,7 +40,7 @@
+ 
+                 <audio controls>
+                     <source src={playbackURL} type={MimeType}/>
+-                    Your browser does not support the audio tag.
++                    您的浏览器不支持音频标签。
+                 </audio>
+ 
+             </Modal>
+--- a/src/views/Base/Widgets/ImageLoader/ImageLoader.js
++++ b/src/views/Base/Widgets/ImageLoader/ImageLoader.js
+@@ -39,7 +39,7 @@
+             <div onClick={hideFull} data-test="toggleModal">
+ 
+                 {
+-                    !imageData || imageData.isLoading ? <Spinner>Loading...</Spinner> :
++                    !imageData || imageData.isLoading ? <Spinner>载入中...</Spinner> :
+                         <img className="img-thumbnail pd-0 m-0 -rotate-90" src={imageData.data} alt=""/>
+                 }
+             </div>
+@@ -65,7 +65,7 @@
+                         <Col lg={4}>
+                             <Card>
+                                 <CardHeader>
+-                                    Operations
++                                    运作方式
+                                 </CardHeader>
+                                 <CardBody>
+                                     <Row>
+--- a/src/views/Explorer/FilesView/FileComponent.js
++++ b/src/views/Explorer/FilesView/FileComponent.js
+@@ -28,9 +28,9 @@
+         await performCopyFile(srcRemoteName, srcRemotePath, destRemoteName, destRemotePath, Name, IsDir);
+         updateHandler();
+         if (IsDir) {
+-            toast.info(`Directory copying started in background: ${Name}`);
++            toast.info(`目录复制在后台开始： ${Name}`);
+         } else {
+-            toast.info(`File copying started in background: ${Name}`);
++            toast.info(`文件复制在后台开始： ${Name}`);
+         }
+         // } else {
+         //     toast.error("This remote does not support copying");
+@@ -41,9 +41,9 @@
+         await performMoveFile(srcRemoteName, srcRemotePath, destRemoteName, destRemotePath, Name, IsDir);
+         updateHandler();
+         if (IsDir) {
+-            toast.info(`Directory moving started in background: ${Name}`);
++            toast.info(`目录移动在后台开始： ${Name}`);
+         } else {
+-            toast.info(`Directory moving started in background: ${Name}`);
++            toast.info(`目录移动在后台开始： ${Name}`);
+         }
+         // } else {
+         //     toast.error("This remote does not support moving");
+@@ -69,7 +69,7 @@
+ 
+     endDrag(props, monitor, component) {
+         // console.log("EndDrag", monitor.getDropResult());
+-        console.log(props, "Component:", component);
++        console.log(props, "组成部分:", component);
+         try {
+             if (monitor.getDropResult() && component) {
+                 performCopyMoveOperation(monitor.getDropResult());
+@@ -78,7 +78,7 @@
+             const error = e.response ? e.response : e;
+             console.log(JSON.stringify(error));
+ 
+-            toast.error(`Error copying file(s). ${error}`, {
++            toast.error(`复制文件时出错。 ${error}`, {
+                 autoClose: false
+             });
+ 
+@@ -113,7 +113,7 @@
+ }
+ 
+ function confirmDelete(deleteHandle, item) {
+-    if (window.confirm(`Are you sure you want to delete ${item.Name}`)) {
++    if (window.confirm(`是否确实要删除 ${item.Name}`)) {
+         deleteHandle(item);
+     }
+ }
+@@ -149,7 +149,7 @@
+                             className="fa fa-share fa-lg d-inline"/> Share with link</DropdownItem>
+                         <DropdownItem divider/>
+                         <DropdownItem onClick={() => confirmDelete(deleteHandle, item)}><i
+-                            className="fa fa-remove fa-lg d-inline text-danger"/> Delete </DropdownItem>
++                            className="fa fa-remove fa-lg d-inline text-danger"/> 删除 </DropdownItem>
+                     </DropdownMenu>
+                 </UncontrolledButtonDropdown>
+             </React.Fragment>
+@@ -169,7 +169,7 @@
+                             className="fa fa-share fa-lg d-inline"/> Share with link</DropdownItem>
+                         <DropdownItem divider/>
+                         <DropdownItem onClick={() => confirmDelete(deleteHandle, item)}><i
+-                            className="fa fa-remove fa-lg d-inline text-danger"/> Delete </DropdownItem>
++                            className="fa fa-remove fa-lg d-inline text-danger"/> 删除 </DropdownItem>
+                     </DropdownMenu>
+                 </UncontrolledButtonDropdown>
+             </React.Fragment>
+--- a/src/views/Explorer/FilesView/FilesView.js
++++ b/src/views/Explorer/FilesView/FilesView.js
+@@ -94,14 +94,14 @@
+     if (gridMode === "card") {
+         return (
+             <Col lg={12}>
+-                <Button onClick={() => upButtonHandle()}>Go Up</Button>
++                <Button onClick={() => upButtonHandle()}>向上</Button>
+             </Col>
+         )
+     } else {
+         return (
+             <tr onClick={() => upButtonHandle()} className={"pointer-cursor"}>
+                 <td colSpan={1}/>
+-                <td colSpan={4}><i className={"fa fa-file-o"}/> Go Up...</td>
++                <td colSpan={4}><i className={"fa fa-file-o"}/> 向上...</td>
+             </tr>);
+     }
+ }
+@@ -236,19 +236,19 @@
+                 await axiosInstance.post(urls.purge, data);
+ 
+                 this.updateHandler();
+-                toast.info(`${item.Name} deleted.`);
++                toast.info(`${item.Name} 删除。`);
+ 
+             } else {
+ 
+                 await axiosInstance.post(urls.deleteFile, data);
+                 this.updateHandler();
+-                toast.info(`${item.Name} deleted.`, {
++                toast.info(`${item.Name} 删除。`, {
+                     autoClose: true
+                 });
+             }
+         } catch (e) {
+             // console.log(`Error in deleting file`);
+-            toast.error(`Error deleting file. ${e}`, {
++            toast.error(`删除文件时出错。 ${e}`, {
+                 autoClose: false
+             });
+         }
+@@ -281,10 +281,10 @@
+                     showLinkShareModal: true
+                 })
+             }, (error) => {
+-                toast.error("Error Generating link: " + error)
++                toast.error("生成链接时出错： " + error)
+             })
+         } else {
+-            toast.error("This remote does not support public link");
++            toast.error("此远程不支持公共链接");
+         }
+ 
+     };
+@@ -330,12 +330,12 @@
+         // console.log(this.props.searchQuery);
+ 
+         if (isLoading || !files) {
+-            return (<div><Spinner color="primary"/> Loading</div>);
++            return (<div><Spinner color="primary"/> 载入中</div>);
+         } else {
+ 
+ 
+             if (remoteName === "") {
+-                return (<div>No remote is selected. Select a remote from above to show files.</div>);
++                return (<div>没有选择遥控器。从上方选择一个遥控器以显示文件。</div>);
+             }
+ 
+ 
+@@ -355,13 +355,13 @@
+                         </Row>
+                         <Row>
+                             <Col lg={3}>
+-                                <h3>Directories</h3>
++                                <h3>目录</h3>
+                                 <ScrollableDiv height={FILES_VIEW_HEIGHT}>
+                                     {dirComponentMap}
+                                 </ScrollableDiv>
+                             </Col>
+                             <Col lg={9}>
+-                                <h3>Files</h3>
++                                <h3>文件</h3>
+                                 <ScrollableDiv height={FILES_VIEW_HEIGHT}>
+                                     <Row>
+                                         {fileComponentMap}
+@@ -388,10 +388,10 @@
+                                 <thead>
+                                 <tr>
+                                     <th className="d-none d-md-table-cell">x</th>
+-                                    <th>Name</th>
+-                                    <th>Size</th>
+-                                    <th className="d-none d-md-table-cell">Modified</th>
+-                                    <th>Actions</th>
++                                    <th>名称</th>
++                                    <th>大小</th>
++                                    <th className="d-none d-md-table-cell">被改进的</th>
++                                    <th>动作</th>
+                                 </tr>
+                                 </thead>
+                                 <tbody>
+@@ -400,12 +400,12 @@
+                                         <React.Fragment>
+                                             <tr>
+                                                 <td colSpan={1} className="d-none d-md-block"/>
+-                                                <th colSpan={4}>Directories</th>
++                                                <th colSpan={4}>目录</th>
+                                             </tr>
+                                             {dirComponentMap}
+                                             <tr>
+                                                 <td className="d-none d-md-table-cell"/>
+-                                                <th>Files</th>
++                                                <th>文件</th>
+                                                 <td className="d-none d-md-table-cell"/>
+                                                 <td/>
+                                                 <td/>
+@@ -415,7 +415,7 @@
+                                     ) :
+                                     <tr>
+                                         <td colSpan={1} className="d-none d-md-table-cell"/>
+-                                        <th colSpan={4}>Files</th>
++                                        <th colSpan={4}>文件</th>
+                                     </tr>
+                                 }
+                                 </tbody>
+@@ -435,7 +435,7 @@
+ 
+                         <Alert color="info" isOpen={isDownloadProgress} toggle={this.dismissAlert} sm={12}
+                                lg={12}>
+-                            Downloading {downloadingItems} file(s). Please wait.
++                            正在下载{downloadingItems}文件。请稍候。
+                         </Alert>
+ 
+                         {renderElement}
+--- a/src/views/Explorer/RemoteExplorerLayout/RemoteExplorerLayout.js
++++ b/src/views/Explorer/RemoteExplorerLayout/RemoteExplorerLayout.js
+@@ -80,7 +80,7 @@
+                         <Card>
+ 
+                             <CardHeader>
+-                                Choose Layout
++                                选择布局
+                             </CardHeader>
+                             <CardBody>
+                                 <Button color={"primary"} className={"ml-2"}
+--- a/src/views/Explorer/RemotesList/RemotesList.js
++++ b/src/views/Explorer/RemotesList/RemotesList.js
+@@ -61,13 +61,13 @@
+         if (hasError) {
+             return (
+                 <div>
+-                    Error loading remotes. Please try again.
++                    加载遥控器时出错。请再试一遍。
+                 </div>
+             )
+         } else if (isEmpty) {
+             return (
+                 <div>
+-                    Add some remotes to see them here <span role="img" aria-label="sheep">🐑</span>.
++                    添加一些遥控器以在此处查看它们 <span role="img" aria-label="sheep">🐑</span>.
+                 </div>);
+         } else {
+ 
+--- a/src/views/Home/Home.js
++++ b/src/views/Home/Home.js
+@@ -15,8 +15,8 @@
+         const ipAddress = localStorage.getItem(IP_ADDRESS_KEY);
+         return (
+             <div data-test="homeComponent">
+-                <h2>Welcome to Rclone dashboard. </h2>
+-                <p>Begin by creating a new remote config from the left sidebar.</p>
++                <h2>欢迎使用Rclone仪表板。 </h2>
++                <p>首先从左边栏创建一个新的远程配置。</p>
+ 
+ 
+                 <Row>
+@@ -27,8 +27,8 @@
+                         <BandwidthStatusCard/>
+                     </Col>
+                 </Row>
+-                <h2>Jobs</h2>
+-                {checkStatus ? <RunningJobs mode={"full-status"}/> : <p>Not Monitoring</p>}
++                <h2>后台任务</h2>
++                {checkStatus ? <RunningJobs mode={"full-status"}/> : <p>不监视</p>}
+ 
+             </div>);
+     }
+--- a/src/views/Pages/Login/Login.js
++++ b/src/views/Pages/Login/Login.js
+@@ -115,7 +115,7 @@
+             changeIPAddress(ipAddress)
+         ]).then(() => {
+             axiosInstance.post(urls.noopAuth).then((data) => {
+-                console.log("Connection successful.");
++                console.log("连接成功。");
+                 this.setState({
+                     connectionSuccess: true,
+                     error: ""
+@@ -124,7 +124,7 @@
+                 console.log(error);
+                 this.setState({
+                     connectionSuccess: false,
+-                    error: "Error connecting. Please check username password and verify if rclone is working at the specified IP."
++                    error: "连接时出错。请检查用户名和密码并验证rclone是否在指定的IP上工作。"
+                 })
+             })
+         })
+@@ -170,18 +170,18 @@
+                                 <Card className="p-4">
+                                     <CardBody>
+                                         <Form onSubmit={this.onSubmit}>
+-                                            <h1>Login</h1>
+-                                            <p className="text-muted">Sign In to your account</p>
++                                            <h1>登录</h1>
++                                            <p className="text-muted">登录到您的帐户</p>
+                                             {error && <UncontrolledAlert color="danger" children={error}/>}
+                                             {connectionSuccess && <UncontrolledAlert color="success"
+-                                                                                     children={"Connection verified. You may now login."}/>}
++                                                                                     children={"连接已验证。您现在可以登录了。"}/>}
+                                             <InputGroup className="mb-3">
+                                                 <InputGroupAddon addonType="prepend">
+                                                     <InputGroupText>
+                                                         <i className="icon-user"></i>
+                                                     </InputGroupText>
+                                                 </InputGroupAddon>
+-                                                <Input type="text" placeholder="IP Address / URL"
++                                                <Input type="text" placeholder="IP地址/URL"
+                                                        autoComplete="ipAddress"
+                                                        onChange={this.changeIPAddress} value={ipAddress}
+                                                        data-testid="LoginForm-ipAddress"/>
+@@ -192,7 +192,7 @@
+                                                         <i className="icon-user"></i>
+                                                     </InputGroupText>
+                                                 </InputGroupAddon>
+-                                                <Input type="text" placeholder="Username" autoComplete="username"
++                                                <Input type="text" placeholder="用户名" autoComplete="username"
+                                                        data-testid="LoginForm-userName"
+                                                        onChange={this.changeUserName} value={username}/>
+                                             </InputGroup>
+@@ -202,7 +202,7 @@
+                                                         <i className="icon-lock"></i>
+                                                     </InputGroupText>
+                                                 </InputGroupAddon>
+-                                                <Input type="password" placeholder="Password"
++                                                <Input type="password" placeholder="密码"
+                                                        data-testid="LoginForm-password"
+                                                        autoComplete="current-password" onChange={this.changePassword}
+                                                        value={password}/>
+@@ -211,12 +211,12 @@
+                                                 <Col xs="6">
+                                                     <Button color="primary" className="px-4"
+                                                             data-testid="LoginForm-BtnLogin"
+-                                                            disabled={!connectionSuccess}>Login</Button>
++                                                            disabled={!connectionSuccess}>登陆</Button>
+                                                 </Col>
+                                                 <Col xs="6" className="text-right">
+                                                     <Button onClick={this.checkConnection} color="primary"
+                                                             data-testid="LoginForm-BtnVerify"
+-                                                            className="px-4">Verify</Button>
++                                                            className="px-4">验证</Button>
+                                                 </Col>
+                                             </Row>
+                                         </Form>
+--- a/src/views/Pages/Page404/Page404.js
++++ b/src/views/Pages/Page404/Page404.js
+@@ -10,8 +10,8 @@
+                         <Col md="6">
+                             <div className="clearfix">
+                                 <h1 className="float-left display-3 mr-4">404</h1>
+-                                <h4 className="pt-3">Oops! You're lost.</h4>
+-                                <p className="text-muted float-left">The page you are looking for was not found.</p>
++                                <h4 className="pt-3">哎呀！你迷路了。</h4>
++                                <p className="text-muted float-left">找不到您要查找的页面。</p>
+                             </div>
+                             <InputGroup className="input-prepend">
+                                 <InputGroupAddon addonType="prepend">
+@@ -19,9 +19,9 @@
+                                         <i className="fa fa-search"></i>
+                                     </InputGroupText>
+                                 </InputGroupAddon>
+-                                <Input size="16" type="text" placeholder="What are you looking for?"/>
++                                <Input size="16" type="text" placeholder="你在找什么？"/>
+                                 <InputGroupAddon addonType="append">
+-                                    <Button color="info">Search</Button>
++                                    <Button color="info">搜索</Button>
+                                 </InputGroupAddon>
+                             </InputGroup>
+                         </Col>
+--- a/src/views/Pages/Page500/Page500.js
++++ b/src/views/Pages/Page500/Page500.js
+@@ -10,8 +10,8 @@
+                         <Col md="6">
+               <span className="clearfix">
+                 <h1 className="float-left display-3 mr-4">500</h1>
+-                <h4 className="pt-3">Houston, we have a problem!</h4>
+-                <p className="text-muted float-left">The page you are looking for is temporarily unavailable.</p>
++                <h4 className="pt-3">Houston, ，我们有麻烦了！</h4>
++                <p className="text-muted float-left">你正在寻找的页面暂时不可用。</p>
+               </span>
+                             <InputGroup className="input-prepend">
+                                 <InputGroupAddon addonType="prepend">
+@@ -19,9 +19,9 @@
+                                         <i className="fa fa-search"></i>
+                                     </InputGroupText>
+                                 </InputGroupAddon>
+-                                <Input size="16" type="text" placeholder="What are you looking for?"/>
++                                <Input size="16" type="text" placeholder="你在找什么？"/>
+                                 <InputGroupAddon addonType="append">
+-                                    <Button color="info">Search</Button>
++                                    <Button color="info">搜索</Button>
+                                 </InputGroupAddon>
+                             </InputGroup>
+                         </Col>
+--- a/src/views/Pages/Register/Register.js
++++ b/src/views/Pages/Register/Register.js
+@@ -25,20 +25,20 @@
+                                 <CardBody className="p-4">
+                                     <Form>
+                                         <h1>Register</h1>
+-                                        <p className="text-muted">Create your account</p>
++                                        <p className="text-muted">创建您的帐户</p>
+                                         <InputGroup className="mb-3">
+                                             <InputGroupAddon addonType="prepend">
+                                                 <InputGroupText>
+                                                     <i className="icon-user"></i>
+                                                 </InputGroupText>
+                                             </InputGroupAddon>
+-                                            <Input type="text" placeholder="Username" autoComplete="username"/>
++                                            <Input type="text" placeholder="用户名" autoComplete="username"/>
+                                         </InputGroup>
+                                         <InputGroup className="mb-3">
+                                             <InputGroupAddon addonType="prepend">
+                                                 <InputGroupText>@</InputGroupText>
+                                             </InputGroupAddon>
+-                                            <Input type="text" placeholder="Email" autoComplete="email"/>
++                                            <Input type="text" placeholder="邮箱" autoComplete="email"/>
+                                         </InputGroup>
+                                         <InputGroup className="mb-3">
+                                             <InputGroupAddon addonType="prepend">
+@@ -46,7 +46,7 @@
+                                                     <i className="icon-lock"></i>
+                                                 </InputGroupText>
+                                             </InputGroupAddon>
+-                                            <Input type="password" placeholder="Password" autoComplete="new-password"/>
++                                            <Input type="password" placeholder="密码" autoComplete="new-password"/>
+                                         </InputGroup>
+                                         <InputGroup className="mb-4">
+                                             <InputGroupAddon addonType="prepend">
+@@ -54,19 +54,19 @@
+                                                     <i className="icon-lock"></i>
+                                                 </InputGroupText>
+                                             </InputGroupAddon>
+-                                            <Input type="password" placeholder="Repeat password"
++                                            <Input type="password" placeholder="重复输入密码"
+                                                    autoComplete="new-password"/>
+                                         </InputGroup>
+-                                        <Button color="success" block>Create Account</Button>
++                                        <Button color="success" block>创建帐户</Button>
+                                     </Form>
+                                 </CardBody>
+                                 <CardFooter className="p-4">
+                                     <Row>
+                                         <Col xs="12" sm="6">
+-                                            <Button className="btn-facebook mb-1" block><span>facebook</span></Button>
++                                            <Button className="btn-facebook mb-1" block><span>脸书</span></Button>
+                                         </Col>
+                                         <Col xs="12" sm="6">
+-                                            <Button className="btn-twitter mb-1" block><span>twitter</span></Button>
++                                            <Button className="btn-twitter mb-1" block><span>推特</span></Button>
+                                         </Col>
+                                     </Row>
+                                 </CardFooter>
+--- a/src/views/RCloneDashboard/RCloneDashboard.js
++++ b/src/views/RCloneDashboard/RCloneDashboard.js
+@@ -12,12 +12,12 @@
+     return (
+         <Col sm={12} lg={4} md={6}>
+             <Card>
+-                <CardHeader>Version</CardHeader>
++                <CardHeader>版本</CardHeader>
+                 <CardBody>
+                     <p><strong>Arch:</strong>{data.arch}</p>
+                     <p><strong>goVersion:</strong>{data.goVersion}</p>
+                     <p><strong>OS:</strong>{data.os}</p>
+-                    <p><strong>Rclone version:</strong>{data.version}</p>
++                    <p><strong>RCONE版本：</strong>{data.version}</p>
+                     <p><strong>isGit:</strong>{data.isGit}</p>
+                 </CardBody>
+             </Card>
+@@ -78,7 +78,7 @@
+     getOptionsView = () => {
+         const {hasError, options} = this.state;
+         if (hasError) {
+-            return (<p>Error loading.</p>);
++            return (<p>加载时出错。</p>);
+         }
+ 
+         const elements = [];
+--- a/src/views/RemoteManagement/NewDrive/NewDrive.js
++++ b/src/views/RemoteManagement/NewDrive/NewDrive.js
+@@ -125,7 +125,7 @@
+         return outputMap;
+     }
+     return (
+-        <div>Select a drive type to continue</div>
++        <div>选择驱动器类型 continue</div>
+     );
+ }
+ 
+@@ -229,7 +229,7 @@
+             }
+         } catch (e) {
+             // console.log(`Error occurred while checking for config: ${e}`);
+-            toast.error(`Error creating config. ${e}`, {
++            toast.error(`创建配置时出错。 ${e}`, {
+                 autoClose: false
+             });
+         }
+@@ -255,24 +255,24 @@
+         if (inputType === "SizeSuffix") {
+             validateResult = validateSizeSuffix(inputValue);
+             if (!validateResult) {
+-                error = "The valid input is size( off | {unit}{metric} eg: 10G, 100M, 10G100M etc.)"
++                error = "有效的输入是大小（off{unit}{metric}例如：10G、100M、10G100M等）"
+             }
+         } else if (inputType === "Duration") {
+             validateResult = validateDuration(inputValue);
+             if (!validateResult) {
+-                error = "The valid input is time ({unit}{metric} eg: 10ms, 100m, 10h15ms etc.)"
++                error = "有效输入是时间（{unit}{metric}例如：10ms、100m、10h15ms等）"
+             }
+         } else if (inputType === "int") {
+             validateResult = validateInt(inputValue);
+             if (!validateResult) {
+-                error = "The valid input is int (100,200,300 etc)"
++                error = "有效输入为整数（100,200,300等）"
+             }
+         }
+ 
+         if (this.state.required[inputName] && (!inputValue || inputValue === "")) {
+             validateResult = false;
+             if (!validateResult) {
+-                error += " This field is required";
++                error += " 此处必填";
+             }
+         }
+ 
+@@ -407,7 +407,7 @@
+         if (this.configCheckInterval === null) {
+             this.configCheckInterval = setInterval(this.checkConfigStatus, NEW_DRIVE_CONFIG_REFRESH_TIMEOUT);
+         } else {
+-            console.error("Interval already running. Should not start a new one");
++            console.error("已在运行，不应该开始新的。");
+         }
+ 
+     }
+@@ -487,14 +487,14 @@
+                         if (!drivePrefix) {
+ 
+                             await axiosInstance.post(urls.createConfig, data);
+-                            toast.info("Config created");
++                            toast.info("配置已创建");
+                         } else {
+                             await axiosInstance.post(urls.updateConfig, data);
+-                            toast.info("Config Updated");
++                            toast.info("配置更新");
+                         }
+ 
+                     } catch (err) {
+-                        toast.error(`Error creating config. ${err}`, {
++                        toast.error(`创建配置时出错。 ${err}`, {
+                             autoClose: false
+                         });
+                         this.stopAuthentication();
+@@ -510,7 +510,7 @@
+             if (this.state.advancedOptions && !this.state.colAdvanced) {
+                 this.openAdvancedSettings();
+             }
+-            toast.warn(`Check for errors before submitting.`, {
++            toast.warn(`提交前检查错误。`, {
+                 autoClose: false
+             });
+         }
+@@ -530,7 +530,7 @@
+      * */
+     changeName = e => {
+         const {driveNameIsEditable} = this.state;
+-        console.log("changeName");
++        console.log("更换名字");
+         if (driveNameIsEditable) {
+             const value = e.target.value;
+ 
+@@ -617,22 +617,22 @@
+         return (
+             <div data-test="newDriveComponent">
+                 <ErrorBoundary>
+-                    <p>This 3 step process will guide you through creating a new config. For auto config, leave the
+-                        parameters as is.</p>
++                    <p>这3个步骤将指导您完成创建新配置的过程。对于自动配置，
++					请保持参数不变。</p>
+                     <Form onSubmit={this.handleSubmit}>
+                         <Card>
+                             <CardHeader>
+                                 <h5>
+                                     <Button color="link" name="colRconfig" onClick={this.toggle}
+-                                            style={{marginBottom: '1rem'}}><strong>Step 1:</strong> Remote
+-                                        Config</Button>
++                                            style={{marginBottom: '1rem'}}><strong>Step 1:</strong> 远程
++                                        配置</Button>
+                                 </h5>
+ 
+                             </CardHeader>
+                             <Collapse isOpen={colRconfig}>
+ 
+                                 <CardBody>
+-                                    <CustomInput label="Name of this drive (For your reference)"
++                                    <CustomInput label="该驱动器的名称（供参考）"
+                                                  changeHandler={this.changeName} value={driveName}
+                                                  placeholder={"Enter a name"} name="name" id="driveName"
+                                                  isValid={driveNameIsValid}/>
+@@ -646,8 +646,8 @@
+                                     </FormGroup>
+                                     <FormGroup row>
+                                         <Col sm={3}>
+-                                            <Label for="inputDriveName">Docs are available at </Label>{' '}
+-                                            <a href="https://rclone.org/commands/rclone_config/">Rclone Config</a>
++                                            <Label for="inputDriveName">可在以下位置获得文档 </Label>{' '}
++                                            <a href="https://rclone.org/commands/rclone_config/">Rclone的配置</a>
+                                         </Col>
+                                     </FormGroup>
+                                 </CardBody>
+@@ -667,7 +667,7 @@
+                             <CardHeader>
+                                 <h5>
+                                     <Button color="link" name="colSetup" onClick={this.toggle}
+-                                            style={{marginBottom: '1rem'}}><strong>Step 2:</strong> Setup Drive</Button>
++                                            style={{marginBottom: '1rem'}}><strong>Step 2:</strong> 设定驱动器</Button>
+                                 </h5>
+ 
+                             </CardHeader>
+@@ -684,7 +684,7 @@
+                                     <div className="clearfix">
+                                         <div className="float-right">
+                                             <Input type="checkbox" value={advancedOptions}
+-                                                   onChange={this.editAdvancedOptions}/><span className="mr-3">Edit Advanced Options</span>
++                                                   onChange={this.editAdvancedOptions}/><span className="mr-3">编辑高级选项</span>
+                                             <Button color="success" onClick={this.openAdvancedSettings}><i
+                                                 className="fa fa-check fa-lg "/></Button>
+ 
+@@ -698,8 +698,8 @@
+                             <CardHeader>
+                                 <h5>
+                                     <Button color="link" name="colAdvanced" onClick={this.toggle}
+-                                            style={{marginBottom: '1rem'}}><strong>Step 3:</strong> Advanced
+-                                        (optional)</Button>
++                                            style={{marginBottom: '1rem'}}><strong>Step 3:</strong> 高级
++                                        (可选)</Button>
+ 
+                                 </h5>
+ 
+@@ -721,7 +721,7 @@
+                         }}>
+                             <div className="float-right mb-3">
+                                 <Button color="info" type="reset" onClick={() => this.clearForm()}>Clear</Button>
+-                                <Button color="success" type="submit">Create Config</Button>
++                                <Button color="success" type="submit">创建配置</Button>
+ 
+                             </div>
+                         </div>
+--- a/src/views/RemoteManagement/NewDrive/config.js
++++ b/src/views/RemoteManagement/NewDrive/config.js
+@@ -26,7 +26,7 @@
+         "Options": [
+             {
+                 "Name": "client_id",
+-                "Help": "Amazon Application Client ID.",
++                "Help": "Amazon应用程序客户端ID。",
+                 "Provider": "",
+                 "Default": "",
+                 "Value": null,
+@@ -39,7 +39,7 @@
+             },
+             {
+                 "Name": "client_secret",
+-                "Help": "Amazon Application Client Secret.",
++                "Help": "亚马逊应用程序客户端机密。",
+                 "Provider": "",
+                 "Default": "",
+                 "Value": null,
+@@ -52,7 +52,7 @@
+             },
+             {
+                 "Name": "auth_url",
+-                "Help": "Auth server URL.\nLeave blank to use Amazon's.",
++                "Help": "验证服务器URL。\n请留空以使用Amazon的。",
+                 "Provider": "",
+                 "Default": "",
+                 "Value": null,
+@@ -65,7 +65,7 @@
+             },
+             {
+                 "Name": "token_url",
+-                "Help": "Token server url.\nleave blank to use Amazon's.",
++                "Help": "令牌服务器url。\n请留空以使用Amazon的。",
+                 "Provider": "",
+                 "Default": "",
+                 "Value": null,
+@@ -124,7 +124,7 @@
+         "Options": [
+             {
+                 "Name": "account",
+-                "Help": "Storage Account Name (leave blank to use connection string or SAS URL)",
++                "Help": "存储帐户名称（留空以使用连接字符串或SAS URL）",
+                 "Provider": "",
+                 "Default": "",
+                 "Value": null,
+@@ -137,7 +137,7 @@
+             },
+             {
+                 "Name": "key",
+-                "Help": "Storage Account Key (leave blank to use connection string or SAS URL)",
++                "Help": "存储帐户密钥（留空以使用连接字符串或SAS URL）",
+                 "Provider": "",
+                 "Default": "",
+                 "Value": null,
+@@ -150,7 +150,7 @@
+             },
+             {
+                 "Name": "sas_url",
+-                "Help": "SAS URL for container level access only\n(leave blank if using account/key or connection string)",
++                "Help": "仅用于容器级访问的SAS URL\n（如果使用帐户/密钥或连接字符串，请留空）",
+                 "Provider": "",
+                 "Default": "",
+                 "Value": null,
+@@ -235,7 +235,7 @@
+         "Options": [
+             {
+                 "Name": "account",
+-                "Help": "Account ID or Application Key ID",
++                "Help": "帐户ID或应用程序密钥ID",
+                 "Provider": "",
+                 "Default": "",
+                 "Value": null,
+@@ -248,7 +248,7 @@
+             },
+             {
+                 "Name": "key",
+-                "Help": "Application Key",
++                "Help": "应用程序 key",
+                 "Provider": "",
+                 "Default": "",
+                 "Value": null,
+@@ -261,7 +261,7 @@
+             },
+             {
+                 "Name": "endpoint",
+-                "Help": "Endpoint for the service.\nLeave blank normally.",
++                "Help": "服务的终结点。\n通常保留为空。",
+                 "Provider": "",
+                 "Default": "",
+                 "Value": null,
+@@ -287,7 +287,7 @@
+             },
+             {
+                 "Name": "versions",
+-                "Help": "Include old versions in directory listings.\nNote that when using this no file write operations are permitted,\nso you can't upload files or delete them.",
++                "Help": "在目录列表中包括旧版本。\n请注意，使用此选项时，不允许执行文件写入操作，因此您不能上载或删除文件。",
+                 "Provider": "",
+                 "Default": false,
+                 "Value": null,
+@@ -300,7 +300,7 @@
+             },
+             {
+                 "Name": "hard_delete",
+-                "Help": "Permanently delete files on remote removal, otherwise hide files.",
++                "Help": "远程删除时永久删除文件，否则隐藏文件。",
+                 "Provider": "",
+                 "Default": false,
+                 "Value": null,
+@@ -313,7 +313,7 @@
+             },
+             {
+                 "Name": "upload_cutoff",
+-                "Help": "Cutoff for switching to chunked upload.\n\nFiles above this size will be uploaded in chunks of \"--b2-chunk-size\".\n\nThis value should be set no larger than 4.657GiB (== 5GB).",
++                "Help": "切换到分块上载的截止时间。\n\n此大小以上的文件将以“--b2 chunk size”的分块上载。\n\n此值应设置为不大于4.657GiB（=5GB）",
+                 "Provider": "",
+                 "Default": 209715200,
+                 "Value": null,
+@@ -326,8 +326,8 @@
+             },
+             {
+                 "Name": "chunk_size",
+-                "Help": "Upload chunk size. Must fit in memory.\n\nWhen uploading large files, chunk the file into this size.  Note that\nthese chunks are buffered in memory and there might a maximum of\n\"--transfers\" chunks in progress at once.  5,000,000 Bytes is the\nminimum size.",
+-                "Provider": "",
++                "Help": "上载块大小。必须适合内存。\n\n上载大文件时，将文件分块到该大小。请注意，这些块在内存中被缓冲，一次最多可能有个“传输”块正在进行中。5000000字节是最小大小。",
++                "提供商": "",
+                 "Default": 100663296,
+                 "Value": null,
+                 "ShortOpt": "",
+@@ -339,7 +339,7 @@
+             },
+             {
+                 "Name": "disable_checksum",
+-                "Help": "Disable checksums for large (\u003e upload cutoff) files",
++                "Help": "禁用大文件（\u003e 上传截止）的校验和",
+                 "Provider": "",
+                 "Default": false,
+                 "Value": null,
+@@ -359,7 +359,7 @@
+         "Options": [
+             {
+                 "Name": "client_id",
+-                "Help": "Box App Client Id.\nLeave blank normally.",
++                "Help": "方框应用程序客户端Id。\n通常保留为空。",
+                 "Provider": "",
+                 "Default": "",
+                 "Value": null,
+@@ -372,7 +372,7 @@
+             },
+             {
+                 "Name": "client_secret",
+-                "Help": "Box App Client Secret\nLeave blank normally.",
++                "Help": "Box应用程序客户端机密\n通常保留为空。",
+                 "Provider": "",
+                 "Default": "",
+                 "Value": null,

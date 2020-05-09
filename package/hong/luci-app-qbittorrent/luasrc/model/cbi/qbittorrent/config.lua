@@ -32,12 +32,12 @@ e:value("en",translate("English"))
 e.default="zh"
 e=t:taboption("basic",Value,"Username",translate("Username"),translate("The login name for WebUI."))
 e.placeholder="admin"
-e=t:taboption("basic",Value,"密码",translate("密码"),translate("The login password for WebUI."))
+e=t:taboption("basic",Value,"Password",translate("Password"),translate("The login password for WebUI."))
 e.password=true
 e=t:taboption("basic",Value,"Port",translate("Listen Port"),translate("The listening port for WebUI."))
 e.datatype="port"
 e.default="8080"
-e=t:taboption("basic",Value,"configuration",translate("Profile Folder Suffix"),translate("Suffix for profile folder, for example, <b>qBittorrent_[NAME]</b>."))
+--e=t:taboption("basic",Value,"configuration",translate("Profile Folder Suffix"),translate("Suffix for profile folder, for example, <b>qBittorrent_[NAME]</b>."))
 t:tab("connection",translate("Connection Settings"))
 e=t:taboption("connection",Flag,"UPnP",translate("Use UPnP for Connections"),translate("Use UPnP/ NAT-PMP port forwarding from my router."))
 e.enabled="true"

@@ -6,7 +6,7 @@ msgid "Parent Path for Profile Folder"
 msgstr "配置保存路径"
 
 msgid "The path for storing profile folder using by command: <b>--profile [PATH]</b>."
-msgstr "配置文件的保存路径，默认的配置文件夹在/tmp下。例如：<code>/etc/config</code>"
+msgstr "配置文件的保存路径，默认在/tmp下。例如：<code>/etc/config</code>"
 
 msgid "Profile Folder Suffix"
 msgstr "配置目录后缀"
@@ -78,7 +78,7 @@ msgid "Connection Port"
 msgstr "自定义端口"
 
 msgid "Generate Randomly"
-msgstr "默认端口：8999"
+msgstr "留空端口默认。"
 
 msgid "Global Download Speed"
 msgstr "全局下载速度限制"
@@ -135,7 +135,7 @@ msgid "Start In Pause"
 msgstr "开始暂停"
 
 msgid "Do not start the download automatically."
-msgstr "在下载任务添加后不立即自动下载。"
+msgstr "添加下载任务后不立即下载。"
 
 msgid "Auto Delete Torrent File"
 msgstr "自动删除种子"
@@ -153,7 +153,7 @@ msgid "Use Incomplete Extension"
 msgstr "使用扩展名"
 
 msgid "The incomplete task will be added the extension of !qB."
-msgstr "为不完整的文件添加后缀名<code>!qB</code>"
+msgstr "为没完成的文件添加后缀名<code>!qB</code>"
 
 msgid "Save Path"
 msgstr "文件保存路径"
@@ -384,7 +384,7 @@ msgid "The login name for WebUI."
 msgstr "WebUI的登录用户名设置。"
 
 msgid "The login password for WebUI."
-msgstr "WebUI用户的登录密码设置。"
+msgstr "WebUI用户的登录密码设置。<b>4.2.x以上版本设置密码无效！</b>"
 
 msgid "The listening port for WebUI."
 msgstr "WebUI的登录端口设置。默认端口：8080"
@@ -423,7 +423,7 @@ msgid "Skip authentication for clients in the IP subnet white list."
 msgstr "对IP子网白名单中的客户端跳过身份验证."
 
 msgid "Advance Settings"
-msgstr "高级设置"
+msgstr "其他设置"
 
 msgid "Anonymous Mode"
 msgstr "匿名模式"
