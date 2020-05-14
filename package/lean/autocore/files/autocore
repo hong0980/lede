@@ -51,7 +51,7 @@ start()
 	done
 
 	[ -f /etc/index.htm ] && mv /etc/index.htm /usr/lib/lua/luci/view/admin_status/index.htm
-    [ -f /etc/poweroff.htm ] && mv /etc/poweroff.htm /usr/lib/lua/luci/view/admin_system/poweroff.htm
+        [ -f /etc/poweroff.htm ] && mv /etc/poweroff.htm /usr/lib/lua/luci/view/admin_system/poweroff.htm
 }
 
   chmod 755 /sbin/cpuinfo

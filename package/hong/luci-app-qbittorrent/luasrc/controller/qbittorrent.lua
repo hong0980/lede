@@ -44,12 +44,15 @@ end
 
 function action_log_read()
 	local data = { log = "", syslog = "" }
-	local a = uci:get("qbittorrent", "main", "profile") or "/tmp"
-	local b = uci:get("qbittorrent", "main", "profile") or "/tmp"
-	data.log = util.trim(sys.exec(string.format(
-	"cat '%s/qBittorrent/data/logs/qbittorrent.log' | tail -n 30  | cut -d'-' -f2-",a)))
-	data.syslog = util.trim(sys.exec(
-	"logread | grep qbittorrent | tail -n 30 | cut -d' ' -f3-"))
+	if uci:get("qbittorrent", "main", "Path") then
+		path = uci:get("qbittorrent", "main", "Path") .. "/qbittorrent.log"
+	else
+		path = uci:get("qbittorrent", "main", "profile") .. "/qBittorrent/data/logs/qbittorrent.log"
+	end
+	path = string.gsub(path, '/+', '/')
+	data.log = util.trim(sys.exec("tail -n 30 " .. path .. " | cut -d'-' -f2- | sed 's/T/-/'"))
+	
+	data.syslog = util.trim(sys.exec("logread | grep qbittorrent | tail -n 30 | cut -d' ' -f3-"))
 	http.prepare_content("application/json")
 	http.write_json(data)
 end
