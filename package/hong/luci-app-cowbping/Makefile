@@ -5,15 +5,50 @@
 
 include $(TOPDIR)/rules.mk
 
-LUCI_TITLE:=LuCI support for cow B ping by wulishui
 PKG_NAME:=luci-app-cowbping
-LUCI_DEPENDS:=+libc
-LUCI_PKGARCH:=all
-PKG_VERSION:=v1.2
-PKG_RELEASE:=v1.2-20200210
+PKG_VERSION=v1.6
+PKG_RELEASE:=v1.6-20200421
 
-include $(TOPDIR)/feeds/luci/luci.mk
+include $(INCLUDE_DIR)/package.mk
 
-# call BuildPackage - OpenWrt buildroot signature
+define Package/$(PKG_NAME)
+  SECTION:=luci
+  CATEGORY:=LuCI
+  SUBMENU:=3. Applications
+  TITLE:=LuCI support for cow B ping by wulishui
+  PKGARCH:=all
+  DEPENDS:=+libc
+endef
+
+define Build/Compile
+endef
+
+define Package/$(PKG_NAME)/postinst
+#!/bin/sh
+rm -f /tmp/luci-*
+endef
+
+define Package/$(PKG_NAME)/conffiles
+/etc/config/cowbping
+endef
+
+define Package/$(PKG_NAME)/install
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci
+	cp -pR ./luasrc/* $(1)/usr/lib/lua/luci
+	
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./root/etc/init.d/* $(1)/etc/init.d/
+	
+	$(INSTALL_DIR) $(1)/etc
+	$(INSTALL_BIN) ./root/etc/cowbping.sh $(1)/etc/cowbping.sh
+	
+	$(INSTALL_DIR) $(1)/etc/uci-defaults
+	$(INSTALL_BIN) ./root/etc/uci-defaults/* $(1)/etc/uci-defaults/
+	
+	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_CONF) ./root/etc/config/cowbping $(1)/etc/config/cowbping
+endef
+
+$(eval $(call BuildPackage,$(PKG_NAME)))
 
 

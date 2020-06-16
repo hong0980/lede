@@ -1,0 +1,6 @@
+
+config cowbbonding 'cowbbonding'
+	option enabled '0'
+	option work_mode '1'
+
+

@@ -344,7 +344,7 @@ d.default = default_config.command or nil
 d = s:option(Flag, "advance", translate("Advance"))
 d.rmempty = true
 d.disabled = 0
-d.enabled = 1
+d.enabled = 0
 d.default = default_config.advance or 0
 
 d = s:option(Value, "hostname", translate("Host Name"), translate("The hostname to use for the container"))

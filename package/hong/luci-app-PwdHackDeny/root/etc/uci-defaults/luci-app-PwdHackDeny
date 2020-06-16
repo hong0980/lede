@@ -9,5 +9,5 @@ EOF
         echo "/etc/WEBbadip.log" >> /etc/sysupgrade.conf
         echo "/etc/SSHbadip.log" >> /etc/sysupgrade.conf
 
-rm -f /tmp/luci-indexcache
+rm -f /tmp/luci-*cache
 exit 0
