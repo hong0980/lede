@@ -1,0 +1,14 @@
+#!/bin/sh
+
+uci -q batch <<-EOF >/dev/null
+	delete ucitrack.@cowbbonding[-1]
+	add ucitrack cowbbonding
+	set ucitrack.@cowbbonding[-1].init=cowbbonding
+	commit ucitrack
+EOF
+
+echo "/etc/cowbbonding/list.cfg" >> /etc/sysupgrade.conf
+chmod +x /etc/init.d/cowbbonding
+chmod +x /etc/cowbbonding.sh
+rm -f /tmp/luci-*
+exit 0

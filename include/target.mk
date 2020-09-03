@@ -25,7 +25,7 @@ DEFAULT_PACKAGES.basic:=
 # For nas targets
 DEFAULT_PACKAGES.nas:=block-mount fdisk lsblk mdadm
 # For router targets
-DEFAULT_PACKAGES.router:=dnsmasq-full iptables ip6tables ppp ppp-mod-pppoe firewall kmod-ipt-offload
+DEFAULT_PACKAGES.router:=dnsmasq-full iptables ppp ppp-mod-pppoe firewall
 
 ifneq ($(DUMP),)
   all: dumpinfo
@@ -62,7 +62,7 @@ endif
 DEFAULT_PACKAGES += $(DEFAULT_PACKAGES.$(DEVICE_TYPE))
 
 filter_packages = $(filter-out -% $(patsubst -%,%,$(filter -%,$(1))),$(1))
-extra_packages = $(if $(filter wpad-mini wpad-basic wpad nas,$(1)),iwinfo)
+extra_packages = $(if $(filter wpad-mini wpad-basic wpad-basic-wolfssl wpad nas,$(1)),iwinfo)
 
 define ProfileDefault
   NAME:=
