@@ -24,7 +24,7 @@ init_mysql()
 	get_env
 	install_soft "$dblist"
 	# MySQL设置
-	mkdir -p /opt/etc/mysql
+	_make_dir /opt/etc/mysql
 	cat > "/opt/etc/mysql/my.cnf" <<-\MMM
 [client-server]
 port               = 3306
@@ -68,7 +68,7 @@ MMM
 
 	chmod 644 /opt/etc/mysql/my.cnf
 
-	mkdir -p /opt/var/mysql
+	_make_dir /opt/var/mysql
 
 	# 数据库安装，同步方式，无需延时等待
 	echo -e "\n正在初始化数据库，请稍等1分钟"

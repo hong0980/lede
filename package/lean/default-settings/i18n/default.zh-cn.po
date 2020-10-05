@@ -166,7 +166,7 @@ msgid "Serial number"
 msgstr "硬盘序列号"
 
 msgid ""
-msgstr ""
+msgstr "警告：有未保存的配置，关机将会丢失！"
 
 msgid ""
 msgstr ""

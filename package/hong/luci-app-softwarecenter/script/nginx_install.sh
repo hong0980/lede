@@ -34,9 +34,9 @@ init_nginx(){
 	# 安装nginx软件包
 	install_soft "$pkglist_nginx"
 	
-	mkdir -p /opt/etc/nginx/vhost
-	mkdir -p /opt/etc/nginx/no_use
-    mkdir -p /opt/etc/nginx/conf
+	_make_dir /opt/etc/nginx/vhost
+	_make_dir /opt/etc/nginx/no_use
+	_make_dir /opt/etc/nginx/conf
 	
 	# 初始化nginx配置文件
 	cat > "/opt/etc/nginx/nginx.conf" <<-\EOF
@@ -82,8 +82,8 @@ EOF
 	nginx_special_conf
 	
 	# 初始化redis
-    echo 'unixsocket /opt/var/run/redis.sock' >> /opt/etc/redis.conf
-    echo 'unixsocketperm 777' >> /opt/etc/redis.conf 
+	echo 'unixsocket /opt/var/run/redis.sock' >> /opt/etc/redis.conf
+	echo 'unixsocketperm 777' >> /opt/etc/redis.conf 
 }
 
 ########## 卸载nginx #########
@@ -102,11 +102,11 @@ nginx_special_conf()
 # php-fpm
 cat > "/opt/etc/nginx/conf/php-fpm.conf" <<-\OOO
 location ~ \.php(?:$|/) {
-    fastcgi_split_path_info ^(.+\.php)(/.+)$; 
-    fastcgi_pass unix:/opt/var/run/php7-fpm.sock;
-    fastcgi_index index.php;
-    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    include fastcgi_params;
+	fastcgi_split_path_info ^(.+\.php)(/.+)$; 
+	fastcgi_pass unix:/opt/var/run/php7-fpm.sock;
+	fastcgi_index index.php;
+	fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+	include fastcgi_params;
 }
 OOO
 
@@ -119,15 +119,15 @@ add_header X-Download-Options noopen;
 add_header X-Permitted-Cross-Domain-Policies none;
 
 location = /robots.txt {
-    allow all;
-    log_not_found off;
-    access_log off;
+	allow all;
+	log_not_found off;
+	access_log off;
 }
 location = /.well-known/carddav {
-    return 301 $scheme://$host/remote.php/dav;
+	return 301 $scheme://$host/remote.php/dav;
 }
 location = /.well-known/caldav {
-    return 301 $scheme://$host/remote.php/dav;
+	return 301 $scheme://$host/remote.php/dav;
 }
 
 fastcgi_buffers 64 4K;
@@ -141,46 +141,46 @@ gzip_proxied expired no-cache no-store private no_last_modified no_etag auth;
 gzip_types application/atom+xml application/javascript application/json application/ld+json application/manifest+json application/rss+xml application/vnd.geo+json application/vnd.ms-fontobject application/x-font-ttf application/x-web-app-manifest+json application/xhtml+xml application/xml font/opentype image/bmp image/svg+xml image/x-icon text/cache-manifest text/css text/plain text/vcard text/vnd.rim.location.xloc text/vtt text/x-component text/x-cross-domain-policy;
 
 location / {
-    rewrite ^ /index.php$request_uri;
+	rewrite ^ /index.php$request_uri;
 }
 location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
-    deny all;
+	deny all;
 }
 location ~ ^/(?:\.|autotest|occ|issue|indie|db_|console) {
-    deny all;
+	deny all;
 }
 
 location ~ ^/(?:index|remote|public|cron|core/ajax/update|status|ocs/v[12]|updater/.+|ocs-provider/.+)\.php(?:$|/) {
-    fastcgi_split_path_info ^(.+?\.php)(/.*)$;
-    include fastcgi_params;
-    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    fastcgi_param PATH_INFO $fastcgi_path_info;
-    fastcgi_param modHeadersAvailable true;
-    fastcgi_param front_controller_active true;
-    fastcgi_pass unix:/opt/var/run/php7-fpm.sock;
-    fastcgi_intercept_errors on;
-    fastcgi_request_buffering off;
+	fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+	include fastcgi_params;
+	fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+	fastcgi_param PATH_INFO $fastcgi_path_info;
+	fastcgi_param modHeadersAvailable true;
+	fastcgi_param front_controller_active true;
+	fastcgi_pass unix:/opt/var/run/php7-fpm.sock;
+	fastcgi_intercept_errors on;
+	fastcgi_request_buffering off;
 }
 
 location ~ ^/(?:updater|ocs-provider)(?:$|/) {
-    try_files $uri/ =404;
-    index index.php;
+	try_files $uri/ =404;
+	index index.php;
 }
 
 location ~ \.(?:css|js|woff|svg|gif)$ {
-    try_files $uri /index.php$request_uri;
-    add_header Cache-Control "public, max-age=15778463";
-    add_header X-Content-Type-Options nosniff;
-    add_header X-XSS-Protection "1; mode=block";
-    add_header X-Robots-Tag none;
-    add_header X-Download-Options noopen;
-    add_header X-Permitted-Cross-Domain-Policies none;
-    access_log off;
+	try_files $uri /index.php$request_uri;
+	add_header Cache-Control "public, max-age=15778463";
+	add_header X-Content-Type-Options nosniff;
+	add_header X-XSS-Protection "1; mode=block";
+	add_header X-Robots-Tag none;
+	add_header X-Download-Options noopen;
+	add_header X-Permitted-Cross-Domain-Policies none;
+	access_log off;
 }
 
 location ~ \.(?:png|html|ttf|ico|jpg|jpeg)$ {
-    try_files $uri /index.php$request_uri;
-    access_log off;
+	try_files $uri /index.php$request_uri;
+	access_log off;
 }
 OOO
 
@@ -194,15 +194,15 @@ add_header X-Download-Options noopen;
 add_header X-Permitted-Cross-Domain-Policies none;
 
 location = /robots.txt {
-    allow all;
-    log_not_found off;
-    access_log off;
+	allow all;
+	log_not_found off;
+	access_log off;
 }
 location = /.well-known/carddav {
-    return 301 $scheme://$host/remote.php/dav;
+	return 301 $scheme://$host/remote.php/dav;
 }
 location = /.well-known/caldav {
-    return 301 $scheme://$host/remote.php/dav;
+	return 301 $scheme://$host/remote.php/dav;
 }
 
 gzip off;
@@ -214,28 +214,28 @@ error_page 403 /core/templates/403.php;
 error_page 404 /core/templates/404.php;
 
 location / {
-    rewrite ^ /index.php$uri;
+	rewrite ^ /index.php$uri;
 }
 
 location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
-    return 404;
+	return 404;
 }
 location ~ ^/(?:\.|autotest|occ|issue|indie|db_|console) {
-    return 404;
+	return 404;
 }
 
 location ~ ^/(?:index|remote|public|cron|core/ajax/update|status|ocs/v[12]|updater/.+|ocs-provider/.+|core/templates/40[34])\.php(?:$|/) {
-    fastcgi_split_path_info ^(.+\.php)(/.*)$;
-    include fastcgi_params;
-    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    fastcgi_param SCRIPT_NAME $fastcgi_script_name;
-    fastcgi_param PATH_INFO $fastcgi_path_info;
-    fastcgi_param modHeadersAvailable true;
-    fastcgi_param front_controller_active true;
-    fastcgi_read_timeout 180;
-    fastcgi_pass unix:/opt/var/run/php7-fpm.sock;
-    fastcgi_intercept_errors on;
-    fastcgi_request_buffering on;
+	fastcgi_split_path_info ^(.+\.php)(/.*)$;
+	include fastcgi_params;
+	fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+	fastcgi_param SCRIPT_NAME $fastcgi_script_name;
+	fastcgi_param PATH_INFO $fastcgi_path_info;
+	fastcgi_param modHeadersAvailable true;
+	fastcgi_param front_controller_active true;
+	fastcgi_read_timeout 180;
+	fastcgi_pass unix:/opt/var/run/php7-fpm.sock;
+	fastcgi_intercept_errors on;
+	fastcgi_request_buffering on;
 }
 
 location ~ ^/(?:updater|ocs-provider)(?:$|/) {
@@ -317,7 +317,7 @@ init_php()
 	install_soft "$pkglist_php7"
 	install_soft "$phpmod"
 
-	mkdir -p /opt/usr/php/tmp/
+	_make_dir /opt/usr/php/tmp/
 	chmod -R 777 /opt/usr/php/tmp/
 
 	sed -e "/^doc_root/d" -i /opt/etc/php.ini

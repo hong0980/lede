@@ -22,7 +22,7 @@ clean_vhost_config(){
 	local_config_list="`ls /opt/etc/nginx/vhost | sed "s/.conf//g"`"
 	local_no_use_config_list="`ls /opt/etc/nginx/no_use | sed "s/.conf//g"`"
 	delete_config_list=""
-	
+
 	# 获取要删除的网站
 	for i in $local_config_list; do
 		flag=""
@@ -48,7 +48,7 @@ clean_vhost_config(){
 			delete_config_list="$delete_config_list /opt/etc/nginx/no_use/$i.conf"
 		fi
 	done
-	
+
 	for conf in $delete_config_list; do
 		webdir=`vhost_config_list $conf | awk '{print $1}'`
 		delete_website $conf $webdir
@@ -64,7 +64,7 @@ handle_website(){
 	config_get_bool autodeploy_enable $1 autodeploy_enable
 	config_get_bool customdeploy_enabled $1 customdeploy_enabled
 	config_get_bool redis_enabled $1 redis_enabled
-	
+
 	config_get website_select $1 website_select
 	config_get website_dir $1 website_dir
 	config_get port $1 port
@@ -83,7 +83,7 @@ handle_website(){
 	else
 		return
 	fi
-	
+
 	if [ -z "$website_enabled" ]; then
 		# 网站未启用
 		if [ -f /opt/etc/nginx/vhost/$website_name.conf ]; then
@@ -107,22 +107,22 @@ handle_website(){
 			/bin/touch /opt/wwwroot/$website_name/redis_enabled
 		fi
 	fi
-	
+
 	website_config_list="$website_config_list $website_name"
 }
 
 start(){
 	local deploy_entware entware_enable entware_disk_mount deploy_nginx deploy_mysql nginx_enabled mysql_enabled
-	
+
 	config_load softwarecenter
-	
+
 	config_get_bool deploy_entware 	main deploy_entware
 	config_get_bool entware_enable	main entware_enable
 	config_get_bool deploy_nginx	main deploy_nginx
 	config_get_bool deploy_mysql	main deploy_mysql
 	config_get_bool	nginx_enabled	main nginx_enabled
 	config_get_bool mysql_enabled	main mysql_enabled
-	
+
 	config_get entware_disk_mount	main entware_disk_mount
 	config_get cpu_architecture		main cpu_architecture
 
@@ -133,18 +133,18 @@ start(){
 		fi
 		return
 	fi
-	
+
 	# 检查entware是否被安装（通过检查启动项来判断）
 	if [ ! -x /etc/init.d/entware ]; then
 		# entware未安装
 		entware_set $cpu_architecture $entware_disk_mount
 		source /etc/profile
 	fi
-	
+
 	if [ -z "$entware_enable" ]; then
 		return
 	fi
-	
+
 	### Nginx ###
 	if [ -n "$deploy_nginx" ];then
 		# 检查Nginx部署情况
@@ -172,7 +172,7 @@ start(){
 			del_nginx
 		fi
 	fi
-	
+
 	### MySQL ###
 	if [ -n "$deploy_mysql" ]; then
 		# 检查MySQL部署情况
