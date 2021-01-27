@@ -7,11 +7,12 @@ local ifaces = sys.net:devices()
 local button = ""
 local state_msg = ""
 
+local enb=(luci.sys.call("[ $(uci get cowbbonding.cowbbonding.enabled 2>/dev/null) == 1 ] 2>/dev/null") == 0)
 local ddd=(luci.sys.call("[ `cat /etc/config/cowbbonding 2>/dev/null|grep -c 'option macwhitelist .1.'` == 1 ] ") == 0)
-
+local ath=(luci.sys.call("[ `cat /usr/bin/77756C6973687569 2>/dev/null|grep -c 'wulishui'` == 2 ] ") == 0)
 if ddd then
-local aaa=(luci.sys.call("[ `iptables -L FORWARD|grep -c '^SWOBL' 2>/dev/null` -gt 0 ] || [ `iptables -L INPUT|grep -c '^SWOBL' 2>/dev/null` -gt 0 ] ") == 0)
-local bbb=(luci.sys.call("[ `iptables -L SWOBL 2>/dev/null|grep -c 'cowbbonding' 2>/dev/null` -gt 0 ] ") == 0)
+local aaa=(luci.sys.call("[ `iptables -L FORWARD|grep -c '^cowbbonding' 2>/dev/null` -gt 0 ]") == 0)
+local bbb=(luci.sys.call("[ `iptables -L cowbbonding 2>/dev/null|grep -c 'cowbbonding' 2>/dev/null` -gt 0 ] ") == 0)
 local ccc=(luci.sys.call("pidof cowbbonding.sh >/dev/null 2>&1") == 0)
 if aaa then
         state_msg1 = "<b><font color=\"green\">" .. translate(" 主链✓") .. "</font></b>"
@@ -24,16 +25,15 @@ else
         state_msg2 = "<b><font color=\"red\">" .. translate(" 跳链不存在") .. "</font></b>"
 end
 if ccc then
-        state_msg3 = "<b><font color=\"green\">" .. translate(" 守护进程✓") .. "</font></b>"
+        state_msg3 = "<b><font color=\"green\">" .. translate(" 后台进程✓") .. "</font></b>"
 else
-        state_msg3 = "<b><font color=\"red\">" .. translate(" 守护未运行") .. "</font></b>"
+        state_msg3 = "<b><font color=\"red\">" .. translate(" 后台未运行") .. "</font></b>"
 end
 end
 
 m = Map("cowbbonding", translate("CowB绑定"))
-m.description = translate("<b><font color=\"green\">CowB绑定可方便用于一次性绑定大量IP/MAC/ARP名单而无须逐条手动输入。你可以使用EXCEL生成MAC对应的IP地址列表或直接从原DHCP分配记录复制过来不加处理即可直接使用。</font></b>")
-
-if ddd then
+m.description = translate("<b><font color=\"green\">CowB绑定可方便用于一次性绑定大量静态DHCP、ARP名单而无须逐条手动输入。你可以使用EXCEL生成MAC对应的IP地址列表或直接从原DHCP分配记录复制过来不加处理即可直接使用。</font></b>")
+if ddd and enb then
 local s = m:section(TypedSection, "cowbbonding", "")
 s.description = translate("").. button .. "" .. translate("白名单状态").. " : "  .. state_msg1 .. translate(" -|-") .. state_msg2 .. translate(" -|-") .. state_msg3 .. ""
 s.anonymous = true
@@ -74,8 +74,9 @@ setport.placeholder=0
 setport.default=0
 setport.rmempty=true
 
+if ath then
 local e = s:option(Flag, "macwhitelist", translate("<font color=\"red\">联网白名单</font>"), "")
-e.description = translate("不允许未经MAC-IP-ARP绑定的主机联网（是禁连外网或是禁止入站与超级名单关联），仅模式2有效。")
+e.description = translate("不允许未经静态MAC-IP绑定的主机联网。")
 e:depends("work_mode", 2)
 e.rmempty = true
 
@@ -136,14 +137,14 @@ function ip.validate(self, value, section)
 	end
 	return Value.validate(self, value, section)
 end
-
+end
 ------------
 
 s = m:section(TypedSection, "cowbbonding")
 s.anonymous=true
 
 o = s:option(TextValue, "/etc/cowbbonding/list.cfg", translate(""), translate("所需内容可智能识别，无须在意先后顺序，只需每行存在一个MAC、IP、IPV6前缀(可无)、DUID(可无)、hostname(可无)，之间由空格隔开。IPV6后缀、DUID仅在定制版固件可用。</br>* Hostname命名规范：只能由a-z A-Z 0-9和符号.-_构成，词首只能为字母，符号不能在末尾，如：Alice.-_PC2 。</br>* IPV6后缀可识别格式为： :ABCD ，必须是完整4位（前加 : ），不能使用缩写法，比如 :0001不能写为 :1。</br>* DUID可识别格式为：0001000123511717fc2d307f010e (28位)或 01-02-03-04-05-06-07-08-09-10-11-12-13-14 (微软格式)。"))
-o.rows = 25
+o.rows = 30
 o.wrap = "off"
 function o.cfgvalue(self, section)
     return fs.readfile("/etc/cowbbonding/list.cfg") or ""
@@ -166,7 +167,5 @@ io.popen("/etc/init.d/cowbbonding start")
 end
 
 return m
-
-
 
 

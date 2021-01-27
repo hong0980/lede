@@ -1,17 +1,52 @@
---[[
-Copyright (C) 2019 Jianpeng Xiang (1505020109@mail.hnust.edu.cn)
-
-This is free software, licensed under the GNU General Public License v3.
-]]--
+-- Copyright (C) 2019 Jianpeng Xiang (1505020109@mail.hnust.edu.cn)
+-- This is free software, licensed under the GNU General Public License v3.
 
 module("luci.controller.softwarecenter",package.seeall)
 
-function index() 
-	local page = entry({"admin","services","softwarecenter"},cbi("softwarecenter"),_("Software Center"))
-	page.i18n="softwarecenter"
-	page.dependent=true
-	
-	entry({"admin","services","softwarecenter","status"}, call("connection_status"))
+function index()
+	local fs = require "nixio.fs"
+	if not nixio.fs.access("/etc/config/softwarecenter")then return end
+	entry({"admin", "services", "softwarecenter"}, alias("admin", "services", "softwarecenter","softwarecenter"), _("软件中心"), 30).dependent = true
+	entry({"admin", "services", "softwarecenter", "softwarecenter"},cbi("softwarecenter/softwarecenter"),_("常用配置"), 40).leaf = true
+  if fs.access("/opt/etc/init.d/S80nginx") then
+    entry({"admin", "services", "softwarecenter", "website"},cbi("softwarecenter/website"),_("网站管理"), 50).leaf = true
+    entry({"admin", "services", "softwarecenter", "errorlog"},form("softwarecenter/errorlog"), _("nginx日志"), 80).leaf = true
+	end
+  if fs.access("/etc/init.d/entware") then
+    entry({"admin", "services", "softwarecenter", "app"},cbi("softwarecenter/app"), _("应用安装"), 60).leaf = true
+	end
+	entry({"admin", "services", "softwarecenter", "log"},form("softwarecenter/log"), _("运行日志"), 70).leaf = true
+	entry({"admin", "services", "softwarecenter", "get_log"}, call("get_log")).leaf = true
+	entry({"admin", "services", "softwarecenter", "clear_log"}, call("clear_log")).leaf = true
+	entry({"admin", "services", "softwarecenter", "error_log"}, call("error_log")).leaf = true
+	entry({"admin", "services", "softwarecenter", "clear_error_log"}, call("clear_error_log")).leaf = true
+	entry({"admin", "services", "softwarecenter", "access_log"}, call("access_log")).leaf = true
+	entry({"admin", "services", "softwarecenter", "clear_access_log"}, call("clear_access_log")).leaf = true
+	entry({"admin", "services", "softwarecenter", "status"}, call("connection_status")).leaf = true
+end
+
+function get_log()
+	luci.http.write(luci.sys.exec("[ -f '/tmp/log/softwarecenter.log' ] && cat /tmp/log/softwarecenter.log"))
+end
+
+function clear_log()
+	luci.sys.call("cat > /tmp/log/softwarecenter.log")
+end
+
+function error_log()
+	luci.http.write(luci.sys.exec("[ -f '/opt/var/log/nginx/error.log' ] && cat /opt/var/log/nginx/error.log | tail -n 50"))
+end
+
+function clear_error_log()
+	luci.sys.call("cat > /opt/var/log/nginx/error.log")
+end
+
+function access_log()
+	luci.http.write(luci.sys.exec("[ -f '/opt/var/log/nginx/access.log' ] && cat /opt/var/log/nginx/access.log | tail -n 50"))
+end
+
+function clear_access_log()
+	luci.sys.call("cat > /opt/var/log/nginx/access.log")
 end
 
 local function nginx_status_report()

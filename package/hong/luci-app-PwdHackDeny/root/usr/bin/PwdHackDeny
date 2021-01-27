@@ -1,6 +1,19 @@
-#!/bin/sh /etc/rc.common
-# wulishui 20200120-20200428 v4.1.1
+#!/bin/bash
+# wulishui 20200120-20200428-20200914-20200923 v4.1.3
 # Author: wulishui <wulishui@gmail.com>
+
+
+logsize=`du /tmp/PwdHackDeny/badip.log.web 2>/dev/null|awk '{print $1}'`
+[ $logsize -gt 80 ] && {
+cat /tmp/PwdHackDeny/badip.log.web >> /tmp/PwdHackDeny/badip.log.web_
+echo ">"$(date +"%Y-%m-%d %H:%M:%S")" ：web日志文件过大，旧的记录已暂时经转移到/tmp/PwdHackDeny/badip.log.web_。" > /tmp/PwdHackDeny/badip.log.web 2>/dev/null
+ }
+
+logsize=`du /tmp/PwdHackDeny/badip.log.ssh 2>/dev/null|awk '{print $1}'`
+[ $logsize -gt 80 ] && {
+cat /tmp/PwdHackDeny/badip.log.ssh >> /tmp/PwdHackDeny/badip.log.ssh_
+echo ">"$(date +"%Y-%m-%d %H:%M:%S")" ：ssh日志文件过大，旧的记录已暂时经转移到/tmp/PwdHackDeny/badip.log.ssh_。" > /tmp/PwdHackDeny/badip.log.ssh 2>/dev/null
+ }
 
 sum=$(uci get PwdHackDeny.PwdHackDeny.sum 2>/dev/null)
 localIP=$(uci get network.lan.ipaddr 2>/dev/null| awk -F '.' '{print $1"."$2"."$3}' 2>/dev/null)
@@ -24,10 +37,10 @@ rm -f /tmp/PwdHackDeny/badmac.ssh.log.tmp 2>/dev/null
 badIPlistssh1=`cat /tmp/PwdHackDeny/badip.ssh.local 2>/dev/null`
 sumssh1=`cat /tmp/PwdHackDeny/badip.ssh.local 2>/dev/null| wc -l 2>/dev/null`
 if [[ $sumssh1 -ne 0 ]];then 
-    for i in $badIPlistssh1
-	do
-       grep "$i" /tmp/PwdHackDeny/dhcp.leases 2>/dev/null|awk '{print $(1)" -> "$(2)}' 2>/dev/null >> /tmp/PwdHackDeny/badmac.ssh.tmp
-	done
+ for i in $badIPlistssh1
+ do
+    grep "$i" /tmp/PwdHackDeny/dhcp.leases 2>/dev/null|awk '{print $(1)" -> "$(2)}' 2>/dev/null >> /tmp/PwdHackDeny/badmac.ssh.tmp
+ done
 fi
 [ -s /tmp/PwdHackDeny/ssh.ip6.tmp ] && cat /tmp/PwdHackDeny/ssh.ip6.tmp 2>/dev/null|sed '/^'"$localIPV6"'/d' 2>/dev/null >> /tmp/PwdHackDeny/badip6.ssh.tmp
 cat /tmp/PwdHackDeny/badip.ssh.tmp  2>/dev/null|sort|uniq -c|sort -k 1 -n -r|awk '{if($1>='"$sum"') print $2}' 2>/dev/null > /tmp/PwdHackDeny/badip.ssh
@@ -55,10 +68,10 @@ rm -f /tmp/PwdHackDeny/badmac.ssh.log.tmp 2>/dev/null
 badIPlistssh1=`cat /tmp/PwdHackDeny/badmac.ssh 2>/dev/null`
 sumssh1=`cat /tmp/PwdHackDeny/badmac.ssh | wc -l 2>/dev/null`
 if [[ $sumssh1 -ne 0 ]];then 
-    for i in $badIPlistssh1
-	do
-       grep "$i" /tmp/PwdHackDeny/badmac.ssh.tmp 2>/dev/null|awk '{print }' 2>/dev/null >> /tmp/PwdHackDeny/badmac.ssh.log.tmp
-	done
+ for i in $badIPlistssh1
+ do
+   grep "$i" /tmp/PwdHackDeny/badmac.ssh.tmp 2>/dev/null|awk '{print }' 2>/dev/null >> /tmp/PwdHackDeny/badmac.ssh.log.tmp
+ done
 fi
 cat /tmp/PwdHackDeny/badmac.ssh.log.tmp 2>/dev/null|sort -n|uniq -i|sed '/^ *$/d' 2>/dev/null > /tmp/PwdHackDeny/badmac.ssh.log
 cat /tmp/PwdHackDeny/badmac.ssh.log /etc/SSHbadip.log 2>/dev/null| sort | uniq -d 2>/dev/null > /tmp/PwdHackDeny/addlistsshmac
@@ -106,10 +119,10 @@ rm -f /tmp/PwdHackDeny/badmac.web.log.tmp 2>/dev/null
 badIPlistweb1=`cat /tmp/PwdHackDeny/badmac.web 2>/dev/null `
 sumweb1=`cat /tmp/PwdHackDeny/badmac.web  2>/dev/null| wc -l`
 if [[ $sumweb1 -ne 0 ]];then 
-    for i in $badIPlistweb1
-	do
-       grep "$i" /tmp/PwdHackDeny/badmac.web.tmp 2>/dev/null|awk '{print }' 2>/dev/null >> /tmp/PwdHackDeny/badmac.web.log.tmp
-	done
+ for i in $badIPlistweb1
+ do
+  grep "$i" /tmp/PwdHackDeny/badmac.web.tmp 2>/dev/null|awk '{print }' 2>/dev/null >> /tmp/PwdHackDeny/badmac.web.log.tmp
+ done
 fi
 cat /tmp/PwdHackDeny/badmac.web.log.tmp 2>/dev/null| sort -n|uniq -i|sed '/^ *$/d' 2>/dev/null > /tmp/PwdHackDeny/badmac.web.log
 cat /tmp/PwdHackDeny/badmac.web.log /etc/WEBbadip.log 2>/dev/null| sort | uniq -d 2>/dev/null > /tmp/PwdHackDeny/addlistwebmac

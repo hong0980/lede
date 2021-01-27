@@ -7,7 +7,7 @@ function index()
 	
 	local page
 
-	page = entry({"admin", "network", "cowbbonding"}, cbi("cowbbonding"), "CowB绑定")
+	page = entry({"admin", "network", "cowbbonding"}, cbi("cowbbonding"), "CowB Bonding", 35)
 	page.dependent = true
 end
 

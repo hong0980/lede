@@ -1,26 +1,27 @@
 #!/bin/bash
 
+[ -s /tmp/log/COWB_BND_SUM ] || exit 0
+BNDSUM=$(cat /tmp/log/COWB_BND_SUM 2>/dev/null|awk '{print $1+1}')
 
 check_1() {
-EXT1=`uci get firewall.@defaults[0].SWOBL_INPUT 2>/dev/null` || EXT1=0
-EXT2=`uci get firewall.@defaults[0].SWOBL_FORWARD 2>/dev/null` || EXT2=0
-if [ "$EXT1" == 0 -a "$EXT2" == 0 ]; then
-uci set firewall.@defaults[0].SWOBL_FORWARD=1
-uci commit firewall
-/etc/init.d/firewall reload >/dev/null 2>&1
-fi
+sleep 1
+iptables -w -C FORWARD -j cowbbonding 2>/dev/null && return
+iptables -w -D FORWARD -j cowbbonding 2>/dev/null
+iptables -w -I FORWARD -j cowbbonding 2>/dev/null
 }
 
-check_2() {
-sleep 2
-iptables -C SWOBL -j cowbbonding 2>/dev/null || iptables -A SWOBL -j cowbbonding 2>/dev/null
+chk_ipts() {
+sleep 1
+SUM=`iptables -w -L cowbbonding 2>/dev/null |grep -c 'cowb_bonding'` ; [ "$SUM" -lt "$BNDSUM" ] && /etc/init.d/cowbbonding restart
 }
 
 while :
 do
-sleep 10
-check_1
-iptables -C SWOBL -j cowbbonding 2>/dev/null || check_2
+sleep 3
+iptables -w -C FORWARD -j cowbbonding 2>/dev/null || check_1
+sleep 3
+SUM=`iptables -w -L cowbbonding 2>/dev/null |grep -c 'cowb_bonding'` ; [ "$SUM" -lt "$BNDSUM" ] && chk_ipts
 done
+
 
 

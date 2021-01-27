@@ -1,1 +1,35 @@
 config softwarecenter 'main'
+config ipk
+config website
+	option website_select '0'
+	option autodeploy_enable '1'
+config website
+	option website_select '1'
+	option autodeploy_enable '1'
+config website
+	option website_select '2'
+	option autodeploy_enable '1'
+config website
+	option website_select '3'
+	option autodeploy_enable '1'
+config website
+	option website_select '4'
+	option autodeploy_enable '1'
+config website
+	option website_select '5'
+	option autodeploy_enable '1'
+config website
+	option website_select '6'
+	option autodeploy_enable '1'
+config website
+	option website_select '7'
+	option autodeploy_enable '1'
+config website
+	option website_select '8'
+	option autodeploy_enable '1'
+config website
+	option website_select '9'
+	option autodeploy_enable '1'
+config website
+	option website_select '10'
+	option autodeploy_enable '1'

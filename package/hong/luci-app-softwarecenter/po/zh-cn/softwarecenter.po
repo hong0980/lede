@@ -94,8 +94,8 @@ msgstr "启用网站自动部署"
 msgid "Select you website to deploy!"
 msgstr "请选择你需要部署的网站"
 
-msgid "Website dir name"
-msgstr "网站目录"
+msgid "Installation information of deployment and software configuration of entware and Onmp"
+msgstr "Entware，ONMP的部署和软件配置的安装信息"
 
 msgid "Enable website custom deploy"
 msgstr "启用网站自定义部署"
@@ -106,5 +106,14 @@ msgstr "此选项设定您自定义网站的目录名，该目录必须放置在
 msgid "Port number"
 msgstr "端口号"
 
-msgid "Website access port,this option must be set and make sure the port number uniquely!"
-msgstr "网站访问端口，该选项必须被设置且端口号不能重复"
+msgid "Nginx operation information"
+msgstr "nginx运行信息"
+
+msgid "Only Owncloud and Nextcloud can use"
+msgstr "只有Owncloud和Nextcloud可以使用"
+
+msgid "Enable Redis"
+msgstr "启用 远程字典服务"
+
+msgid "Clear logs"
+msgstr "清空日志"

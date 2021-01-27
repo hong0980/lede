@@ -206,7 +206,7 @@ init_QBT(){
 	[ -d "$profile/$confdir/config" ] || {
 		mkdir -m 0755 -p "$profile/$confdir/config"
 	}
-
+	[ $SavePath ] && mkdir -p $SavePath
 	[ "$user" != "root" ] && {
 		[ -d "$confdir" ] && {
 			local groupnow="$(ls -l $profile | grep $confdir | awk '{print $3})"
