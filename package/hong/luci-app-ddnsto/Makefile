@@ -2,6 +2,7 @@
 
 include $(TOPDIR)/rules.mk
 
+PKG_ARCH_DDNSTO:=$(ARCH)
 PKG_NAME:=luci-app-ddnsto
 PKG_VERSION:=1.0.0
 PKG_RELEASE:=2
@@ -41,15 +42,25 @@ define Build/Compile
 endef
 
 define Package/$(PKG_NAME)/postinst
+#!/bin/sh
+rm -f /tmp/luci-*
 endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci
 	cp -pR ./luasrc/* $(1)/usr/lib/lua/luci
-	$(INSTALL_DIR) $(1)/
-	cp -pR ./root/* $(1)/
+
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./root/etc/init.d/* $(1)/etc/init.d/
+	
+	$(INSTALL_DIR) $(1)/etc/uci-defaults
+	$(INSTALL_BIN) ./root/etc/uci-defaults/* $(1)/etc/uci-defaults/
+	
+	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_CONF) ./root/etc/config/* $(1)/etc/config/ddnsto
+	
 	$(INSTALL_DIR)	$(1)/usr/bin/
-	$(INSTALL_BIN) ./files/arm/ddnsto $(1)/usr/bin/
+	$(INSTALL_BIN) ./files/ddnsto.$(PKG_ARCH_DDNSTO) $(1)/usr/bin/ddnsto
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))

@@ -4,9 +4,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-softwarecenter
-LUCI_DEPENDS:=
-PKG_VERSION=2.0
-PKG_RELEASE:=3
+PKG_VERSION=2.1.1
+PKG_RELEASE:=20210210
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -14,7 +13,7 @@ define Package/$(PKG_NAME)
   SECTION:=luci
   CATEGORY:=LuCI
   SUBMENU:=3. Applications
-  DEPENDS:=+parted +blkid +e2fsprogs
+  DEPENDS:=@(aarch64||arm||x86_64||mipsel) +parted +blkid +e2fsprogs
   TITLE:=LuCI Support for Software Center
   PKGARCH:=all
 endef
@@ -24,11 +23,6 @@ endef
 
 define Package/$(PKG_NAME)/conffiles
 /etc/config/softwarecenter
-endef
-
-define Package/$(PKG_NAME)/postinst
-#!/bin/sh
-rm -f /tmp/luci-*
 endef
 
 define Package/$(PKG_NAME)/install

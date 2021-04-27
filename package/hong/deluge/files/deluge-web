@@ -1,0 +1,57 @@
+#!/bin/sh /etc/rc.common
+
+START=99
+USE_PROCD=1
+
+daemon_status ()
+{
+	[ -n "`pidof deluge-web`" ]
+}
+
+
+start() {
+	echo "starting deluge-web"
+	deluge-web -l /etc/deluge/deluge-web.log -L error -p 888
+	}
+
+stop() {
+	echo "stopping deluge-web"
+	killall deluge-web
+	}
+
+case "$1" in
+	start)
+		if daemon_status; then
+			echo "deluge-web already running"
+		else
+			start
+		fi
+		;;
+	stop)
+		if daemon_status; then
+			stop
+		else
+			echo "deluge-web is not running"
+		fi
+		;;
+	restart)
+		if daemon_status; then
+			stop
+		fi
+		sleep 4
+		if ! daemon_status; then
+			start
+		fi
+		;;
+	status) 
+		if daemon_status; then
+			echo "deluge-web is running"
+		else
+			echo "deluge-web is not running"
+		fi
+		;;
+	*)
+		echo "Usage: $0 (start|stop|restart|status)"
+		exit 1
+		;;
+esac

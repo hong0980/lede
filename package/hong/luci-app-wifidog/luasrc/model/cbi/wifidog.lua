@@ -11,11 +11,6 @@ local lan_ifname = luci.util.exec("uci get network.lan.ifname")
 m = Map("wifidog", "认证设置",
 	translate("KOS认证参数配置，服务器后台登陆<a href=\"http://wifi.scjxsw.com\" target=\"_blank\">  点击进入>></a>"))
 
-
-	
-
-
-
 if fs.access("/usr/bin/wifidog") then
 	s = m:section(TypedSection, "wifidog", "web认证配置")
 	s.anonymous = true
