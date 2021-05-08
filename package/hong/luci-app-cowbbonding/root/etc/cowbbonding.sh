@@ -1,27 +1,36 @@
 #!/bin/bash
-
-[ -s /tmp/log/COWB_BND_SUM ] || exit 0
-BNDSUM=$(cat /tmp/log/COWB_BND_SUM 2>/dev/null|awk '{print $1+1}')
-
-check_1() {
-sleep 1
-iptables -w -C FORWARD -j cowbbonding 2>/dev/null && return
-iptables -w -D FORWARD -j cowbbonding 2>/dev/null
-iptables -w -I FORWARD -j cowbbonding 2>/dev/null
-}
+if [ -s /tmp/log/COWB_BND_SUM ]; then
 
 chk_ipts() {
 sleep 1
-SUM=`iptables -w -L cowbbonding 2>/dev/null |grep -c 'cowb_bonding'` ; [ "$SUM" -lt "$BNDSUM" ] && /etc/init.d/cowbbonding restart
+iptables -w -t nat -C PREROUTING -j cowbbonding 2>/dev/null || /etc/init.d/cowbbonding start reload
+}
+
+I_ipt() {
+iptables -w -t nat -D PREROUTING -j cowbbonding 2>/dev/null
+iptables -w -t nat -C PREROUTING -j cowbbonding 2>/dev/null || iptables -w -t nat -I PREROUTING -j cowbbonding 2>/dev/null
+}
+
+chk_index() {
+LPT=`iptables -w -t nat -L PREROUTING`
+SWOBL=`echo "$LPT" | grep '^SWOBL' `
+domainfilter=`echo "$LPT" | grep '^domainfilter' `
+INDEX0=`echo "$LPT" | tail +3 |sed -n -e '/^cowbbonding/=' | tail -1`
+if [ -n "$SWOBL" -a -n "$domainfilter" ]; then
+ INDEX=3
+elif [ -z "$SWOBL" -a -n "$domainfilter" ]; then
+ INDEX=2
+elif [ -n "$SWOBL" -a -z "$domainfilter" ]; then
+ INDEX=2
+else
+ INDEX=1
+fi
+[ -n "$INDEX0" ] && { [ "$INDEX0" -gt "$INDEX" ] && I_ipt ; return ; } || chk_ipts
 }
 
 while :
 do
-sleep 3
-iptables -w -C FORWARD -j cowbbonding 2>/dev/null || check_1
-sleep 3
-SUM=`iptables -w -L cowbbonding 2>/dev/null |grep -c 'cowb_bonding'` ; [ "$SUM" -lt "$BNDSUM" ] && chk_ipts
+sleep 10
 done
-
-
+fi
 

@@ -33,7 +33,7 @@ endef
 
 define Package/axel/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/axel $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/axel $(1)/usr/bin
 endef
 
 $(eval $(call BuildPackage,axel))

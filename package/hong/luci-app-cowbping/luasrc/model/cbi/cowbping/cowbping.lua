@@ -22,7 +22,7 @@ m.description = translate("<font style='color:green'>定期ping一个网址以�
 s = m:section(TypedSection, "cowbping")
 s.anonymous=true
 s.addremove=false
-enabled = s:option(Flag, "enabled", translate("启用"), translate("为总开关，这里开启后整个程序才会启动。"))
+enabled = s:option(Flag, "enabled", translate("启用"), translate("启用后如再次需修改以下设定，须先禁用、再修改然后再启用。"))
 enabled.default = 0
 enabled.rmempty = true
 
@@ -72,12 +72,25 @@ enabled:value("7", translate("6.关机睡觉"))
 enabled:value("5", translate("7.自设命令"))
 enabled.default = 2
 
-command =s:option(Value,"command",translate("自设命令"))
-command.description = translate("格式如： iw wlan0 scan 。多条命令间用 && 隔开。")
-command.default='echo "断网啦！"'
-command.rmempty=true
+command = s:option(TextValue, "/etc/config/cbp_cmd", translate("自设命令"), translate("可使用shell命令脚本，须仔细检查，如其中有错误，可能导致所有命令无法执行。"))
 command:depends("work_mode", 5)
+command.rows = 10
+command.wrap = "off"
+function command.cfgvalue(self, section)
+    return fs.readfile("/etc/config/cbp_cmd") or ""
+end
+function command.write(self, section, value)
+    if value then
+        value = value:gsub("\r\n?", "\n")
+        fs.writefile("/tmp/cbp_cmd", value)
+        if (luci.sys.call("cmp -s /tmp/cbp_cmd /etc/config/cbp_cmd") == 1) then
+            fs.writefile("/etc/config/cbp_cmd", value)
+        end
+        fs.remove("/tmp/cbp_cmd")
+    end
+end
 
 return m
+
 
 
