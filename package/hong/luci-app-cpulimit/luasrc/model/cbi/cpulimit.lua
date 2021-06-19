@@ -3,10 +3,11 @@ s=m:section(TypedSection,"list",translate("Settings"))
 s.template="cbi/tblsection"
 s.anonymous=true
 s.addremove=true
-enable=s:option(Flag,"enabled",translate("enable","enable"))
+enable=s:option(Flag,"enabled",translate("Enable","Enable"))
 enable.optional=false
 enable.rmempty=false
-local e="ps | awk '{print $5}' | sed '1d' | sort -k2n | uniq | sed '/^\\\[/d' | sed '/sed/d' | sed '/awk/d' | sed '/hostapd/d' | sed '/pppd/d' | sed '/mwan3/d' | sed '/sleep/d' | sed '/sort/d' | sed '/ps/d' | sed '/uniq/d' | awk -F '/' '{print $NF}'"
+
+local e="ps | awk '{print $5}' | awk -F/ '{print $NF}' | sort | uniq | grep -Ev 'ps|sed|awk|sort|uniq|grep|luci|sleep|COMMAND|hostapd|pppd|mwan3|]$|sh$'"
 local e=io.popen(e,"r")
 exename=s:option(Value,"exename",translate("exename"),translate("name of the executable program file or path name"))
 exename.optional=false
@@ -15,6 +16,7 @@ exename.default="vsftpd"
 for e in e:lines()do
 exename:value(e)
 end
+
 limit=s:option(Value,"limit",translate("limit"))
 limit.optional=false
 limit.rmempty=false

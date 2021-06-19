@@ -41,7 +41,6 @@ endef
 define Build/Prepare
 	mkdir -vp $(PKG_BUILD_DIR)
 	unzip -od $(PKG_BUILD_DIR) $(DL_DIR)/$(PKG_SOURCE)
-	cp -f src/* $(PKG_BUILD_DIR)/build//static/js/
 endef
 
 define Build/Configure

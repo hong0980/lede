@@ -1,24 +1,8 @@
-msgid ""
-msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-28\n"
-"PO-Revision-Date: 2014-06-28\n"
-"Last-Translator: Syrone Wong <wong.syrone@gmail.com>\n"
-"Language: zh_CN\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-
 msgid "cpulimit"
 msgstr "CPU限制"
 
 msgid "Use cpulimit to restrict app's cpu usage."
 msgstr "利用cpulimit限制应用程序的CPU使用率"
-
-msgid "enable"
-msgstr "使用率限制"
 
 msgid "exename"
 msgstr "进程名称"
@@ -85,15 +69,6 @@ msgstr "不支持"
 
 msgid "CPU Model"
 msgstr "CPU型号"
-
-msgid "AriaNg"
-msgstr "打开AriaNg的Web管理界面"
-
-msgid "WebUI-Aria2"
-msgstr "打开WebUI-Aria2的Web管理界面"
-
-msgid "YAAW"
-msgstr "打开YAAW的Web管理界面"
 
 msgid "services"
 msgstr "服务"

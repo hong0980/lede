@@ -5,18 +5,18 @@ local uci = require "luci.model.uci".cursor()
 local state=(luci.sys.call("pgrep axel >/dev/null") == 0)
 
 if state then
-	state_msg = "<b><font color=\"green\">" .. translate("Axel ÕıÔÚÔËĞĞ") .. "</font></b>"
+	state_msg = "<b><font color=\"green\">" .. translate("Axel æ­£åœ¨è¿è¡Œ") .. "</font></b>"
 else
-	state_msg = "<b><font color=\"red\">" .. translate("Axel Ã»ÓĞÔËĞĞ") .. "</font></b>"
+	state_msg = "<b><font color=\"red\">" .. translate("Axel æ²¡æœ‰è¿è¡Œ") .. "</font></b>"
 end
 
 local s=luci.sys.exec("HOME=/tmp axel --version | awk '/Axel/{print $2}'")
-m = Map("axel", "Axel", translate("axel ÊÇÒ»¸öÖ§³ÖHTTP£¬HTTPS£¬FTPºÍFTPSĞ­Òé²»´íµÄ¸ßËÙÏÂÔØ¹¤¾ß¡£Ö§³Ö¶àÏß³ÌÏÂÔØ¡¢¶ÏµãĞø´«£¬ÇÒ¿ÉÒÔ´Ó¶à¸öµØÖ·»òÕß´ÓÒ»¸öµØÖ·µÄ¶à¸öÁ¬½ÓÀ´ÏÂÔØÍ¬Ò»¸öÎÄ¼ş¡£ÊÊºÏÍøËÙ²»¸øÁ¦Ê±¶àÏß³ÌÏÂÔØÌá¸ßÏÂÔØËÙ¶È¡£") .. "<br/><br/>" .. translate("ÔËĞĞ×´Ì¬ : ") .. state_msg .. "<br/><br/>")
+m = Map("axel", "Axel", translate("axel æ˜¯ä¸€ä¸ªæ”¯æŒHTTPï¼ŒHTTPSï¼ŒFTPå’ŒFTPSåè®®ä¸é”™çš„é«˜é€Ÿä¸‹è½½å·¥å…·ã€‚æ”¯æŒå¤šçº¿ç¨‹ä¸‹è½½ã€æ–­ç‚¹ç»­ä¼ ï¼Œä¸”å¯ä»¥ä»å¤šä¸ªåœ°å€æˆ–è€…ä»ä¸€ä¸ªåœ°å€çš„å¤šä¸ªè¿æ¥æ¥ä¸‹è½½åŒä¸€ä¸ªæ–‡ä»¶ã€‚é€‚åˆç½‘é€Ÿä¸ç»™åŠ›æ—¶å¤šçº¿ç¨‹ä¸‹è½½æé«˜ä¸‹è½½é€Ÿåº¦ã€‚") .. "<br/><br/>" .. translate("è¿è¡ŒçŠ¶æ€ : ") .. state_msg .. "<br/><br/>")
 
 t = m:section(NamedSection,"main", "axel")
 t:tab("basic",translate("Basic Settings"))
-e=t:taboption("basic",Flag,"enabled",translate("ÆôÓÃ"),"%s  %s"%{translate(""),"<b style=\"color:green\">"..translatef("µ±Ç°AxelµÄ°æ±¾: %s",s).."</b>"})
-e=t:taboption("basic",Value,"SavePath",translate("±£´æÂ·¾¶"),translate("ÏÂÔØÎÄ¼şµÄ±£´æÂ·¾¶¡£ÀıÈç£º<code>/mnt/sda1/download</code>"))
+e=t:taboption("basic",Flag,"enabled",translate("å¯ç”¨"),"%s  %s"%{translate(""),"<b style=\"color:green\">"..translatef("å½“å‰Axelçš„ç‰ˆæœ¬: %s",s).."</b>"})
+e=t:taboption("basic",Value,"SavePath",translate("ä¿å­˜è·¯å¾„"),translate("ä¸‹è½½æ–‡ä»¶çš„ä¿å­˜è·¯å¾„ã€‚ä¾‹å¦‚ï¼š<code>/mnt/sda1/download</code>"))
 e.placeholder="/tmp/download"
 
 return m

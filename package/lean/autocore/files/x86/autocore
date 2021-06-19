@@ -49,13 +49,4 @@ start()
 	done
 
 	[ -f /etc/index.htm ] && mv /etc/index.htm /usr/lib/lua/luci/view/admin_status/index.htm
-        [ -f /etc/poweroff.htm ] && mv /etc/poweroff.htm /usr/lib/lua/luci/view/admin_system/poweroff.htm
 }
-
-  chmod 755 /sbin/cpuinfo
-  chmod 755 /sbin/ethinfo
-  chmod 755 /sbin/getcpu
-  sed -i '/"action_reboot"/a\entry({"admin","system","PowerOff"},template("admin_system/poweroff"),_("Power Off"),92)\n\entry({"admin","system","PowerOff","call"},post("PowerOff"))' /usr/lib/lua/luci/controller/admin/system.lua
-  sed -i '$a\function PowerOff()\n\luci.util.exec("poweroff")\n\end' /usr/lib/lua/luci/controller/admin/system.lua
-
-
